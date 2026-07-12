@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pixel Study — SSC Class 10 Study Companion</title>
+<meta name="description" content="A focused study companion for Maharashtra State Board Class 10: Mathematics Part I &amp; II and Science Part I &amp; II.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Pixel Study — SSC Class 10 Study Companion
+   Design concept: the Indian board-exam answer sheet — a ruled
+   page with a red margin rule, spiral-notebook punch holes, and
+   a teacher's correction stamp for completed work.
+   ============================================================ */
+
+/* ---------- Reset ---------- */
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+img,svg{display:block;max-width:100%;}
+button,input,textarea,select{font:inherit;color:inherit;}
+button{cursor:pointer;background:none;border:none;}
+a{color:inherit;}
+ul,ol{margin:0;padding:0;list-style:none;}
+h1,h2,h3,h4,p{margin:0;}
+:focus{outline:none;}
+:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px;border-radius:4px;}
+
+/* ---------- Design tokens ---------- */
+html{
+  font-size:clamp(14.5px,0.6vw + 13px,16.5px);
+}
+:root, [data-theme="paper"]{
+  --ink:#1B2A4A;
+  --ink-soft:#4B5A78;
+  --ink-faint:#8592AA;
+  --paper:#F2F5FA;
+  --paper-raised:#FFFFFF;
+  --rule:#D7E0EE;
+  --rule-strong:#BFCBE0;
+  --margin:#B23A2F;
+  --margin-soft:#E7C9C4;
+  --accent:#2F7D5D;
+  --accent-soft:#DCEEE5;
+  --gold:#B8791A;
+  --gold-soft:#F3E4C6;
+  --focus:#2F5D9E;
+  --shadow-sm:0 1px 2px rgba(27,42,74,.07);
+  --shadow-md:0 6px 20px rgba(27,42,74,.10);
+  --shadow-lg:0 18px 44px rgba(27,42,74,.16);
+  --c-math1:#2F5D9E; --c-math1-ink:#fff;
+  --c-math2:#2F7D5D; --c-math2-ink:#fff;
+  --c-sci1:#C98A1F;  --c-sci1-ink:#1B2A4A;
+  --c-sci2:#8E3B62;  --c-sci2-ink:#fff;
+  color-scheme:light;
+}
+[data-theme="slate"]{
+  --ink:#EAEEF6;
+  --ink-soft:#B7C0D6;
+  --ink-faint:#7C8AA6;
+  --paper:#141C29;
+  --paper-raised:#1D2736;
+  --rule:#2A3547;
+  --rule-strong:#37455B;
+  --margin:#E2685A;
+  --margin-soft:#4A2C2A;
+  --accent:#5FCB9E;
+  --accent-soft:#1E3A30;
+  --gold:#F0B429;
+  --gold-soft:#3A2F14;
+  --focus:#7FA8E8;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 6px 20px rgba(0,0,0,.35);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.5);
+  --c-math1:#4E7FC7; --c-math1-ink:#0B1220;
+  --c-math2:#4FAE87; --c-math2-ink:#0B1220;
+  --c-sci1:#E3AE49;  --c-sci1-ink:#0B1220;
+  --c-sci2:#B5638A;  --c-sci2-ink:#0B1220;
+  color-scheme:dark;
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+  min-height:100vh;
+  min-height:100dvh;
+}
+h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
+.font-mono,code,.mono{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+
+/* ---------- Layout shell ---------- */
+.app-shell{
+  display:flex;
+  min-height:100vh;
+  min-height:100dvh;
+  align-items:stretch;
+}
+.main-col{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- Nav rail ---------- */
+.nav-rail{
+  width:270px;
+  flex:0 0 270px;
+  background:var(--paper-raised);
+  border-right:1px solid var(--rule);
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+  height:100dvh;
+  padding-left:18px;
+  position:relative;
+  z-index:40;
+}
+.rail-holes{
+  position:absolute;
+  left:0;top:0;bottom:0;width:18px;
+  border-right:1px dashed var(--rule-strong);
+  display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;
+  padding:28px 0;
+}
+.rail-holes span{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--paper);
+  border:1.5px solid var(--rule-strong);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.15);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  padding:22px 16px 18px;
+  border-bottom:1px solid var(--rule);
+}
+.brand-mark{
+  width:38px;height:38px;border-radius:9px;
+  background:var(--ink);color:var(--paper-raised);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Serif',serif;font-weight:700;font-size:1.15rem;
+  flex:0 0 auto;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.2;min-width:0;}
+.brand-text strong{font-family:'IBM Plex Serif',serif;font-size:1.05rem;letter-spacing:.2px;}
+.brand-text small{color:var(--ink-faint);font-size:.72rem;letter-spacing:.3px;}
+.drawer-close{display:none;margin-left:auto;width:32px;height:32px;border-radius:8px;align-items:center;justify-content:center;color:var(--ink-soft);}
+.drawer-close:hover{background:var(--paper);}
+
+.nav-groups{flex:1;overflow-y:auto;padding:14px 12px 14px 16px;}
+.nav-group{margin-bottom:20px;}
+.nav-group-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.64rem;text-transform:uppercase;letter-spacing:1.4px;
+  color:var(--ink-faint);
+  padding:0 10px 8px;
+}
+.nav-item{
+  width:100%;
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;
+  border-radius:9px;
+  font-size:.86rem;
+  color:var(--ink-soft);
+  text-align:left;
+  transition:background .15s ease,color .15s ease;
+}
+.nav-item .nav-ic{flex:0 0 auto;width:20px;height:20px;color:var(--ink-faint);}
+.nav-item:hover{background:var(--paper);color:var(--ink);}
+.nav-item.active{background:var(--ink);color:var(--paper-raised);}
+.nav-item.active .nav-ic{color:var(--paper-raised);}
+.nav-chip{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:700;
+}
+.rail-footer{padding:14px 16px 18px;border-top:1px solid var(--rule);}
+.theme-toggle{
+  display:flex;align-items:center;gap:8px;width:100%;
+  padding:9px 10px;border-radius:9px;border:1px solid var(--rule-strong);
+  font-size:.8rem;color:var(--ink-soft);
+}
+.theme-toggle:hover{background:var(--paper);}
+.theme-toggle .nav-ic{width:16px;height:16px;}
+
+.drawer-overlay{
+  display:none;
+  position:fixed;inset:0;background:rgba(10,15,25,.45);
+  z-index:35;
+}
+
+/* ---------- Topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;gap:12px;
+  padding:14px clamp(16px,3vw,32px);
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.hamburger{display:none;width:36px;height:36px;flex:0 0 auto;align-items:center;justify-content:center;border-radius:8px;color:var(--ink-soft);}
+.hamburger:hover{background:var(--paper-raised);}
+.view-title{font-size:1.15rem;font-weight:600;letter-spacing:.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:8px;min-width:0;}
+.icon-btn{
+  width:38px;height:38px;flex:0 0 auto;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink-soft);border:1px solid transparent;
+}
+.icon-btn:hover{background:var(--paper-raised);border-color:var(--rule);}
+.icon-btn svg{width:18px;height:18px;}
+
+.mini-timer{
+  display:none;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:20px;
+  background:var(--accent-soft);color:var(--accent);
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:600;
+  border:1px solid transparent;white-space:nowrap;
+}
+.mini-timer.show{display:flex;}
+.mini-timer:hover{border-color:var(--accent);}
+
+.search-wrap{position:relative;width:clamp(140px,22vw,260px);}
+.search-wrap input{
+  width:100%;padding:8px 12px 8px 34px;border-radius:20px;
+  border:1px solid var(--rule-strong);background:var(--paper-raised);
+  font-size:.82rem;
+}
+.search-wrap input:focus-visible{outline:2.5px solid var(--focus);outline-offset:1px;}
+.search-ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--ink-faint);pointer-events:none;}
+.search-results{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--paper-raised);border:1px solid var(--rule);
+  border-radius:12px;box-shadow:var(--shadow-lg);
+  max-height:360px;overflow-y:auto;z-index:50;
+}
+.search-results button{
+  width:100%;text-align:left;padding:10px 14px;font-size:.82rem;
+  border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;
+}
+.search-results button:last-child{border-bottom:none;}
+.search-results button:hover{background:var(--paper);}
+.search-results .sr-title{font-weight:600;}
+.search-results .sr-meta{font-size:.7rem;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;}
+.search-empty{padding:14px;font-size:.8rem;color:var(--ink-faint);text-align:center;}
+
+/* ---------- Main content ---------- */
+.main-content{
+  flex:1;
+  padding:clamp(16px,3vw,32px);
+  max-width:1180px;
+  width:100%;
+  margin:0 auto;
+  background-image:repeating-linear-gradient(var(--paper) 0 34px, var(--rule) 34px 35px);
+  background-attachment:local;
+}
+.view{animation:rise .45s ease both;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.section-head{margin-bottom:20px;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--margin);font-weight:600;margin-bottom:6px;
+}
+.section-head h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.85rem);font-weight:600;}
+.section-sub{color:var(--ink-soft);font-size:.92rem;margin-top:6px;max-width:60ch;}
+
+/* ---------- Cards (answer-sheet motif) ---------- */
+.sheet-card{
+  background:var(--paper-raised);
+  border:1px solid var(--rule);
+  border-radius:14px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+  overflow:hidden;
+}
+.sheet-card::before{
+  content:"";position:absolute;left:38px;top:0;bottom:0;width:1.5px;
+  background:var(--margin-soft);
+}
+[data-theme="slate"] .sheet-card::before{background:var(--margin-soft);}
+
+/* ---------- Dashboard ---------- */
+.dash-hero{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:22px;
+}
+.hero-card{
+  background:var(--paper-raised);border:1px solid var(--rule);border-radius:18px;
+  padding:26px clamp(18px,3vw,32px);box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;justify-content:center;gap:10px;position:relative;
+}
+.hero-greet{font-size:clamp(1.4rem,1.1rem + 1.3vw,2rem);font-weight:600;letter-spacing:.1px;}
+.hero-sub{color:var(--ink-soft);font-size:.94rem;max-width:46ch;}
+.hero-stats{display:flex;gap:22px;margin-top:8px;flex-wrap:wrap;}
+.hero-stat{display:flex;flex-direction:column;}
+.hero-stat b{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;line-height:1;}
+.hero-stat span{font-size:.72rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.8px;margin-top:5px;}
+.exam-chip{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  background:var(--margin-soft);color:var(--margin);border-radius:20px;
+  padding:6px 12px 6px 8px;font-size:.78rem;font-weight:600;cursor:pointer;border:none;
+}
+[data-theme="slate"] .exam-chip{color:#F3A79A;}
+.exam-chip b{font-family:'IBM Plex Mono',monospace;}
+.exam-edit{display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap;}
+.exam-edit input{padding:7px 10px;border-radius:8px;border:1px solid var(--rule-strong);background:var(--paper);}
+
+.ring-card{
+  background:var(--paper-raised);border:1px solid var(--rule);border-radius:18px;
+  box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:6px;
+}
+.ring-wrap{position:relative;width:150px;height:150px;}
+.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:var(--rule);stroke-width:11;}
+.ring-fill{fill:none;stroke:var(--accent);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .6s ease;}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-center b{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;}
+.ring-center span{font-size:.66rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.6px;text-align:center;max-width:90px;}
+
+.subject-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+.subject-card{
+  background:var(--paper-raised);border:1px solid var(--rule);border-radius:16px;
+  padding:20px;box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease;
+  display:flex;flex-direction:column;gap:12px;text-align:left;
+}
+.subject-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.subject-top{display:flex;align-items:center;gap:12px;}
+.subject-chip{
+  width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.82rem;flex:0 0 auto;
+}
+.subject-name{font-weight:600;font-size:1rem;line-height:1.25;}
+.subject-name small{display:block;font-weight:400;color:var(--ink-faint);font-size:.74rem;margin-top:2px;}
+.bar-track{height:8px;border-radius:6px;background:var(--rule);overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s ease;}
+.subject-meta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--ink-soft);}
+.subject-meta b{font-family:'IBM Plex Mono',monospace;color:var(--ink);}
+.subject-cta{align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--focus);display:flex;align-items:center;gap:5px;}
+
+.dash-lower{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mini-panel{background:var(--paper-raised);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-sm);}
+.mini-panel h3{font-size:.98rem;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.mini-panel h3 a,.mini-panel h3 button.link{font-size:.74rem;color:var(--focus);font-weight:600;}
+.mini-task{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:.85rem;}
+.mini-task:last-child{border-bottom:none;}
+.mini-task .dot{width:7px;height:7px;border-radius:50%;background:var(--margin);flex:0 0 auto;}
+.empty-note{color:var(--ink-faint);font-size:.84rem;padding:8px 0;}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;
+  border:1px solid transparent;transition:all .15s ease;white-space:nowrap;
+}
+.btn-primary{background:var(--ink);color:var(--paper-raised);}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px);}
+.btn-ghost{background:transparent;border-color:var(--rule-strong);color:var(--ink);}
+.btn-ghost:hover{background:var(--paper-raised);}
+.btn-danger{background:transparent;border-color:var(--margin-soft);color:var(--margin);}
+.btn-danger:hover{background:var(--margin-soft);}
+.btn-sm{padding:7px 12px;font-size:.78rem;border-radius:8px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* ---------- Subject / chapter view ---------- */
+.subject-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;
+}
+.subject-icon-lg{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.1rem;flex:0 0 auto;}
+.subject-progress-line{flex:1;min-width:200px;}
+.subject-progress-line .bar-track{height:10px;}
+.subject-progress-num{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--ink-soft);margin-top:6px;}
+
+.chapter-card{margin-bottom:14px;}
+.chapter-head{
+  display:flex;align-items:center;gap:14px;padding:16px 18px 16px 52px;cursor:pointer;
+}
+.chapter-no{
+  font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--margin);font-size:.82rem;
+  flex:0 0 auto;
+}
+.chapter-title{font-weight:600;font-size:.94rem;flex:1;min-width:0;}
+.chapter-title small{display:block;font-weight:400;color:var(--ink-faint);font-size:.72rem;margin-top:2px;}
+.status-group{display:flex;gap:4px;flex:0 0 auto;}
+.status-btn{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--rule-strong);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--ink-faint);
+}
+.status-btn:hover{background:var(--paper);}
+.status-btn.active[data-status="not-started"]{background:var(--rule);color:var(--ink-soft);border-color:var(--rule);}
+.status-btn.active[data-status="in-progress"]{background:var(--gold-soft);color:var(--gold);border-color:var(--gold);}
+.status-btn.active[data-status="done"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);}
+.chevron{width:18px;height:18px;color:var(--ink-faint);transition:transform .2s ease;flex:0 0 auto;}
+.chapter-card.open .chevron{transform:rotate(180deg);}
+
+.stamp{
+  position:absolute;top:14px;right:16px;
+  border:2px solid var(--accent);color:var(--accent);
+  border-radius:8px;padding:3px 9px;font-size:.62rem;font-weight:700;letter-spacing:.6px;
+  transform:rotate(-8deg);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;
+  pointer-events:none;
+}
+
+.chapter-body{padding:0 20px 22px 52px;display:none;}
+.chapter-card.open .chapter-body{display:block;animation:rise .3s ease both;}
+.chapter-body h4{font-size:.74rem;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-faint);margin:14px 0 8px;}
+.chapter-body h4:first-child{margin-top:2px;}
+.formula-row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px dashed var(--rule);font-size:.85rem;flex-wrap:wrap;}
+.formula-row:last-child{border-bottom:none;}
+.formula-row .f-name{color:var(--ink-soft);flex:1 1 160px;}
+.formula-row .f-expr{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink);flex:1 1 200px;text-align:right;}
+.q-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:.85rem;align-items:flex-start;}
+.q-row .marks{
+  flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:700;
+  background:var(--gold-soft);color:var(--gold);border-radius:6px;padding:2px 7px;white-space:nowrap;
+}
+.notes-area{width:100%;min-height:90px;padding:12px;border-radius:10px;border:1px solid var(--rule-strong);background:var(--paper);resize:vertical;font-size:.85rem;line-height:1.5;}
+.notes-area::placeholder{color:var(--ink-faint);}
+.notes-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.saved-flag{font-size:.7rem;color:var(--accent);opacity:0;transition:opacity .3s ease;font-weight:600;}
+.saved-flag.visible{opacity:1;}
+
+/* ---------- Formula vault ---------- */
+.vault-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+.filter-chip{padding:7px 14px;border-radius:20px;border:1px solid var(--rule-strong);font-size:.8rem;font-weight:600;color:var(--ink-soft);}
+.filter-chip.active{background:var(--ink);color:var(--paper-raised);border-color:var(--ink);}
+.vault-group{margin-bottom:22px;}
+.vault-group-title{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.vault-group-title .subject-chip{width:30px;height:30px;font-size:.66rem;border-radius:8px;}
+.vault-group-title h3{font-size:.98rem;font-weight:600;}
+.vault-chapter{background:var(--paper-raised);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.vault-chapter .vc-head{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--margin);font-weight:700;margin-bottom:6px;}
+
+/* ---------- Quiz ---------- */
+.quiz-select-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px;}
+.quiz-opt-card{
+  background:var(--paper-raised);border:1.5px solid var(--rule);border-radius:14px;padding:18px;
+  text-align:left;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm);
+}
+.quiz-opt-card:hover{border-color:var(--focus);transform:translateY(-2px);}
+.quiz-opt-card b{font-size:.95rem;}
+.quiz-opt-card span{font-size:.76rem;color:var(--ink-faint);}
+.quiz-card{background:var(--paper-raised);border:1px solid var(--rule);border-radius:16px;padding:clamp(18px,3vw,30px);box-shadow:var(--shadow-md);max-width:620px;margin:0 auto;}
+.quiz-progress{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-faint);margin-bottom:14px;}
+.quiz-q{font-size:1.05rem;font-weight:600;margin-bottom:18px;line-height:1.4;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-option{
+  text-align:left;padding:12px 16px;border-radius:10px;border:1.5px solid var(--rule-strong);
+  font-size:.88rem;display:flex;align-items:center;gap:10px;
+}
+.quiz-option:hover:not(:disabled){border-color:var(--focus);}
+.quiz-option .opt-letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--rule-strong);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.68rem;flex:0 0 auto;}
+.quiz-option.correct{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+.quiz-option.correct .opt-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+.quiz-option.wrong{background:var(--margin-soft);border-color:var(--margin);color:var(--margin);}
+.quiz-option.wrong .opt-letter{background:var(--margin);color:#fff;border-color:var(--margin);}
+.quiz-explain{margin-top:16px;padding:12px 14px;background:var(--paper);border-radius:10px;font-size:.82rem;color:var(--ink-soft);border-left:3px solid var(--focus);}
+.quiz-foot{display:flex;justify-content:flex-end;margin-top:18px;}
+.quiz-result{text-align:center;}
+.quiz-result .big-score{font-family:'IBM Plex Mono',monospace;font-size:2.6rem;font-weight:700;margin:10px 0 4px;}
+.quiz-result p{color:var(--ink-soft);font-size:.9rem;margin-bottom:20px;}
+.quiz-result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* ---------- Planner ---------- */
+.planner-form{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.planner-form input[type="text"]{flex:1 1 220px;padding:11px 14px;border-radius:10px;border:1px solid var(--rule-strong);background:var(--paper-raised);font-size:.86rem;}
+.planner-form select{padding:11px 12px;border-radius:10px;border:1px solid var(--rule-strong);background:var(--paper-raised);font-size:.86rem;}
+.planner-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.planner-tab{padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:600;color:var(--ink-soft);border:1px solid transparent;}
+.planner-tab.active{background:var(--ink);color:var(--paper-raised);}
+.task-row{
+  display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--paper-raised);
+  border:1px solid var(--rule);border-radius:12px;margin-bottom:8px;
+}
+.task-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--rule-strong);flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
+.task-row.done .task-check{background:var(--accent);border-color:var(--accent);color:#fff;}
+.task-text{flex:1;font-size:.87rem;min-width:0;word-break:break-word;}
+.task-row.done .task-text{color:var(--ink-faint);text-decoration:line-through;}
+.task-tag{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:6px;}
+.task-del{flex:0 0 auto;width:28px;height:28px;border-radius:8px;color:var(--ink-faint);display:flex;align-items:center;justify-content:center;}
+.task-del:hover{background:var(--margin-soft);color:var(--margin);}
+
+/* ---------- Timer ---------- */
+.timer-wrap{max-width:460px;margin:0 auto;text-align:center;}
+.timer-modes{display:flex;justify-content:center;gap:8px;margin-bottom:26px;}
+.timer-mode-btn{padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:600;color:var(--ink-soft);border:1px solid var(--rule-strong);}
+.timer-mode-btn.active{background:var(--ink);color:var(--paper-raised);border-color:var(--ink);}
+.timer-face{
+  width:min(78vw,270px);height:min(78vw,270px);border-radius:50%;margin:0 auto 26px;
+  border:2px solid var(--rule-strong);display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:var(--paper-raised);box-shadow:var(--shadow-md);position:relative;
+}
+.timer-face.running{border-color:var(--accent);}
+#timerDisplay{font-family:'IBM Plex Mono',monospace;font-size:clamp(2.4rem,7vw,3.4rem);font-weight:700;letter-spacing:1px;}
+.timer-label{font-size:.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-faint);margin-top:6px;}
+.timer-controls{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.timer-subject{display:flex;justify-content:center;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+.timer-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;}
+.timer-stats .hero-stat{align-items:center;}
+
+/* ---------- Progress view ---------- */
+.progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
+.subject-bar-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule);}
+.subject-bar-row:last-child{border-bottom:none;}
+.subject-bar-row .sb-chip{width:34px;height:34px;border-radius:9px;font-size:.62rem;}
+.subject-bar-row .sb-info{flex:1;min-width:0;}
+.subject-bar-row .sb-info b{font-size:.82rem;display:block;margin-bottom:5px;}
+.quiz-history-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:.8rem;}
+.quiz-history-row:last-child{border-bottom:none;}
+.qh-bar-track{flex:1;height:7px;background:var(--rule);border-radius:5px;overflow:hidden;}
+.qh-bar-fill{height:100%;background:var(--focus);border-radius:5px;}
+.data-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+
+/* ---------- Toast ---------- */
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--paper-raised);padding:11px 20px;border-radius:30px;
+  font-size:.83rem;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;
+  transition:all .25s ease;z-index:100;max-width:90vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- Chips reused ---------- */
+.subject-chip[data-s="math1"],.sb-chip[data-s="math1"],.nav-chip[data-s="math1"],.subject-icon-lg[data-s="math1"]{background:var(--c-math1);color:var(--c-math1-ink);}
+.subject-chip[data-s="math2"],.sb-chip[data-s="math2"],.nav-chip[data-s="math2"],.subject-icon-lg[data-s="math2"]{background:var(--c-math2);color:var(--c-math2-ink);}
+.subject-chip[data-s="sci1"],.sb-chip[data-s="sci1"],.nav-chip[data-s="sci1"],.subject-icon-lg[data-s="sci1"]{background:var(--c-sci1);color:var(--c-sci1-ink);}
+.subject-chip[data-s="sci2"],.sb-chip[data-s="sci2"],.nav-chip[data-s="sci2"],.subject-icon-lg[data-s="sci2"]{background:var(--c-sci2);color:var(--c-sci2-ink);}
+.task-tag[data-s="math1"]{background:color-mix(in srgb, var(--c-math1) 18%, transparent);color:var(--c-math1);}
+.task-tag[data-s="math2"]{background:color-mix(in srgb, var(--c-math2) 18%, transparent);color:var(--c-math2);}
+.task-tag[data-s="sci1"]{background:color-mix(in srgb, var(--c-sci1) 22%, transparent);color:var(--c-sci1);}
+.task-tag[data-s="sci2"]{background:color-mix(in srgb, var(--c-sci2) 18%, transparent);color:var(--c-sci2);}
+.task-tag[data-s="all"]{background:var(--rule);color:var(--ink-soft);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:959px){
+  .nav-rail{
+    position:fixed;top:0;left:0;height:100vh;height:100dvh;
+    width:min(84vw,300px);flex-basis:auto;
+    transform:translateX(-100%);transition:transform .28s ease;
+    box-shadow:var(--shadow-lg);
+  }
+  .nav-rail.open{transform:translateX(0);}
+  .drawer-close{display:flex;}
+  .drawer-overlay.open{display:block;}
+  .hamburger{display:flex;}
+  .search-wrap{width:auto;flex:1;}
+  .dash-hero{grid-template-columns:1fr;}
+  .subject-grid{grid-template-columns:1fr;}
+  .dash-lower{grid-template-columns:1fr;}
+  .progress-grid{grid-template-columns:1fr;}
+  .quiz-select-grid{grid-template-columns:1fr;}
+}
+@media (max-width:520px){
+  .search-wrap{display:none;}
+  .topbar{gap:8px;}
+  .hero-stats{gap:16px;}
+  .chapter-head{padding:14px 12px 14px 40px;}
+  .chapter-body{padding:0 14px 18px 40px;}
+  .sheet-card::before{left:26px;}
+  .planner-form{flex-direction:column;}
+  .planner-form select{width:100%;}
+  .timer-controls .btn{flex:1;}
+  .quiz-result-actions{flex-direction:column;}
+  .quiz-result-actions .btn{width:100%;}
+}
+@media (max-width:360px){
+  .hero-stat b{font-size:1.25rem;}
+  .ring-wrap{width:130px;height:130px;}
+}
+
+/* Scrollbar (webkit) */
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--rule-strong);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-faint);}
+
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="drawer-overlay" id="drawerOverlay" data-action="nav-drawer-toggle"></div>
+
+  <aside class="nav-rail" id="navRail" aria-label="Main navigation">
+    <div class="rail-holes" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="brand">
+      <span class="brand-mark">P</span>
+      <div class="brand-text"><strong>Pixel Study</strong><small>SSC Class 10 · Maharashtra Board</small></div>
+      <button class="drawer-close" data-action="nav-drawer-toggle" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <nav class="nav-groups" id="navGroups">
+      <div class="nav-group">
+        <p class="nav-group-label">Section A — Overview</p>
+        <button class="nav-item" data-action="nav" data-view="dashboard">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="3" width="8" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="10" width="8" height="11" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-item" data-action="nav" data-view="progress">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          My Progress
+        </button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-label">Section B — Subjects</p>
+        <button class="nav-item" data-action="nav" data-view="subject" data-subject="math1">
+          <span class="nav-chip" data-s="math1">M1</span> Mathematics Part I
+        </button>
+        <button class="nav-item" data-action="nav" data-view="subject" data-subject="math2">
+          <span class="nav-chip" data-s="math2">M2</span> Mathematics Part II
+        </button>
+        <button class="nav-item" data-action="nav" data-view="subject" data-subject="sci1">
+          <span class="nav-chip" data-s="sci1">S1</span> Science Part I
+        </button>
+        <button class="nav-item" data-action="nav" data-view="subject" data-subject="sci2">
+          <span class="nav-chip" data-s="sci2">S2</span> Science Part II
+        </button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-label">Section C — Study Tools</p>
+        <button class="nav-item" data-action="nav" data-view="formulas">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><path d="M4 4h16M4 12h10M4 20h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Formula &amp; Concept Vault
+        </button>
+        <button class="nav-item" data-action="nav" data-view="quiz">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><path d="M9 11l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+          Practice Quiz
+        </button>
+        <button class="nav-item" data-action="nav" data-view="planner">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Study Planner
+        </button>
+        <button class="nav-item" data-action="nav" data-view="timer">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M12 9v4l3 2M9 2h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Focus Timer
+        </button>
+      </div>
+    </nav>
+
+    <div class="rail-footer">
+      <button class="theme-toggle" data-action="theme-toggle">
+        <svg class="nav-ic" id="themeIconRail" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span id="themeLabelRail">Paper mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <header class="topbar">
+      <button class="hamburger" data-action="nav-drawer-toggle" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <h1 class="view-title" id="viewTitle">Dashboard</h1>
+      <div class="topbar-actions">
+        <button class="mini-timer" id="miniTimer" data-action="nav" data-view="timer" aria-label="Focus session in progress">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span id="miniTimerText">25:00</span>
+        </button>
+        <div class="search-wrap">
+          <svg class="search-ic" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="searchInput" type="text" placeholder="Search chapters, formulas…" aria-label="Search study material" autocomplete="off">
+          <div class="search-results" id="searchResults" hidden></div>
+        </div>
+        <button class="icon-btn" id="themeToggleTop" data-action="theme-toggle" aria-label="Toggle paper / slate mode">
+          <svg viewBox="0 0 24 24" fill="none" id="themeIconTop"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="mainContent" class="main-content" aria-live="polite"></main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA — Maharashtra State Board, Class 10 (SSC) syllabus
+   ============================================================ */
+const SUBJECTS = {
+  math1:{
+    key:"math1", mode:"formula",
+    label:"Mathematics Part I", subtitle:"Algebra · Paper I", chip:"M-I",
+    chapters:[
+      {no:1, title:"Linear Equations in Two Variables",
+        items:[
+          {name:"General form", expr:"a\u2081x + b\u2081y = c\u2081,  a\u2082x + b\u2082y = c\u2082"},
+          {name:"Cramer's Rule", expr:"x = Dx/D,  y = Dy/D"},
+          {name:"Determinant D", expr:"D = a\u2081b\u2082 \u2212 a\u2082b\u2081"}
+        ],
+        qs:[
+          {q:"Solve the pair of equations by the elimination method.", m:2},
+          {q:"Solve the pair of equations using Cramer's Rule.", m:3},
+          {q:"Frame and solve simultaneous equations from a word problem (ages, fractions, digits).", m:4}
+        ]},
+      {no:2, title:"Quadratic Equations",
+        items:[
+          {name:"Standard form", expr:"ax\u00B2 + bx + c = 0  (a\u2260 0)"},
+          {name:"Quadratic formula", expr:"x = (\u2212b \u00B1 \u221A(b\u00B2\u22124ac)) / 2a"},
+          {name:"Discriminant", expr:"\u0394 = b\u00B2 \u2212 4ac"},
+          {name:"Sum & product of roots", expr:"sum = \u2212b/a,  product = c/a"}
+        ],
+        qs:[
+          {q:"Solve the quadratic equation by factorisation.", m:2},
+          {q:"Solve the quadratic equation using the formula.", m:2},
+          {q:"Form a quadratic equation given its roots.", m:2},
+          {q:"Word problem leading to a quadratic equation (speed, work, numbers).", m:4}
+        ]},
+      {no:3, title:"Arithmetic Progression",
+        items:[
+          {name:"nth term", expr:"t\u2099 = a + (n\u22121)d"},
+          {name:"Sum of n terms", expr:"S\u2099 = n/2 [2a + (n\u22121)d]"}
+        ],
+        qs:[
+          {q:"Find the nth term or the number of terms of an A.P.", m:2},
+          {q:"Find the sum of the first n terms of an A.P.", m:2},
+          {q:"Word problem based on an A.P. (savings, seating, patterns).", m:3}
+        ]},
+      {no:4, title:"Financial Planning",
+        items:[
+          {name:"GST amount", expr:"GST = (Rate/100) \u00D7 Taxable value"},
+          {name:"Intra-state GST split", expr:"CGST = SGST = GST / 2"},
+          {name:"Dividend received", expr:"Dividend = (Rate/100) \u00D7 Face value \u00D7 no. of shares"}
+        ],
+        qs:[
+          {q:"Compute the GST payable / input tax credit for a given transaction.", m:3},
+          {q:"Calculate dividend received on a given number of shares.", m:2},
+          {q:"Prepare a simple tax-invoice style GST computation.", m:3}
+        ]},
+      {no:5, title:"Probability",
+        items:[
+          {name:"Classical probability", expr:"P(E) = n(E) / n(S)"},
+          {name:"Complement rule", expr:"P(not E) = 1 \u2212 P(E)"}
+        ],
+        qs:[
+          {q:"Find the probability of an event using coins, dice or a deck of cards.", m:2},
+          {q:"List the sample space and find probability for a compound event.", m:3}
+        ]},
+      {no:6, title:"Statistics",
+        items:[
+          {name:"Mean (assumed mean)", expr:"x\u0304 = A + (\u03A3fd / \u03A3f)"},
+          {name:"Median (grouped)", expr:"L + [(N/2 \u2212 cf)/f] \u00D7 h"},
+          {name:"Mode (grouped)", expr:"L + [(f\u2081\u2212f\u2080)/(2f\u2081\u2212f\u2080\u2212f\u2082)] \u00D7 h"}
+        ],
+        qs:[
+          {q:"Find the mean of grouped data by the assumed-mean or step-deviation method.", m:3},
+          {q:"Find the median / mode of grouped data.", m:3},
+          {q:"Draw and interpret an ogive (cumulative frequency curve).", m:4}
+        ]}
+    ]
+  },
+  math2:{
+    key:"math2", mode:"formula",
+    label:"Mathematics Part II", subtitle:"Geometry · Paper II", chip:"M-II",
+    chapters:[
+      {no:1, title:"Similarity",
+        items:[
+          {name:"Basic Proportionality Theorem", expr:"DE\u2225BC \u21D2 AD/DB = AE/EC"},
+          {name:"Areas of similar triangles", expr:"ratio of areas = (ratio of sides)\u00B2"}
+        ],
+        qs:[
+          {q:"Prove two triangles are similar and find the ratio of their areas.", m:3},
+          {q:"Apply the Basic Proportionality Theorem to find an unknown side.", m:2}
+        ]},
+      {no:2, title:"Pythagoras Theorem",
+        items:[
+          {name:"Pythagoras theorem", expr:"a\u00B2 + b\u00B2 = c\u00B2"},
+          {name:"30\u201360\u201390 triangle", expr:"side opp. 30\u00B0 = half the hypotenuse"}
+        ],
+        qs:[
+          {q:"Verify or apply Pythagoras theorem in a given right triangle.", m:2},
+          {q:"Prove a result using Pythagoras theorem (proof-based).", m:3}
+        ]},
+      {no:3, title:"Circle",
+        items:[
+          {name:"Tangent theorem", expr:"tangent \u22A5 radius at point of contact"},
+          {name:"Tangent segment theorem", expr:"tangents from an external point are equal"},
+          {name:"Inscribed angle theorem", expr:"inscribed angle = \u00BD central angle"}
+        ],
+        qs:[
+          {q:"Prove a tangent / chord related theorem.", m:3},
+          {q:"Numerical on tangent length or chord using circle theorems.", m:2}
+        ]},
+      {no:4, title:"Geometric Constructions",
+        items:[
+          {name:"Tangent construction", expr:"tangent to a circle from an external point"},
+          {name:"Similar triangle construction", expr:"triangle similar to a given one, given scale factor"}
+        ],
+        qs:[
+          {q:"Construct a tangent to a circle from an external point.", m:3},
+          {q:"Construct a triangle similar to a given triangle in a given ratio.", m:4}
+        ]},
+      {no:5, title:"Coordinate Geometry",
+        items:[
+          {name:"Distance formula", expr:"d = \u221A[(x\u2082\u2212x\u2081)\u00B2 + (y\u2082\u2212y\u2081)\u00B2]"},
+          {name:"Section formula", expr:"((mx\u2082+nx\u2081)/(m+n), (my\u2082+ny\u2081)/(m+n))"},
+          {name:"Slope", expr:"m = (y\u2082\u2212y\u2081)/(x\u2082\u2212x\u2081)"}
+        ],
+        qs:[
+          {q:"Find the distance between two given points.", m:2},
+          {q:"Find the coordinates of a point dividing a segment in a given ratio.", m:2},
+          {q:"Check whether three given points are collinear.", m:2}
+        ]},
+      {no:6, title:"Trigonometry",
+        items:[
+          {name:"Ratios", expr:"sin\u03B8=opp/hyp, cos\u03B8=adj/hyp, tan\u03B8=opp/adj"},
+          {name:"Identity", expr:"sin\u00B2\u03B8 + cos\u00B2\u03B8 = 1"},
+          {name:"Elevation / depression", expr:"used in height\u2013distance word problems"}
+        ],
+        qs:[
+          {q:"Prove a trigonometric identity.", m:3},
+          {q:"Solve a height-and-distance word problem using elevation/depression.", m:4}
+        ]},
+      {no:7, title:"Mensuration",
+        items:[
+          {name:"Cylinder", expr:"CSA=2\u03C0rh, TSA=2\u03C0r(r+h), V=\u03C0r\u00B2h"},
+          {name:"Cone", expr:"CSA=\u03C0rl, V=\u2153\u03C0r\u00B2h, l=\u221A(r\u00B2+h\u00B2)"},
+          {name:"Sphere / Hemisphere", expr:"V(sphere)=\u2074\u2044\u2083\u03C0r\u00B3, V(hemi)=\u2154\u03C0r\u00B3"}
+        ],
+        qs:[
+          {q:"Find the volume / surface area of a combination of solids.", m:4},
+          {q:"Cost-based word problem using mensuration formulas.", m:3}
+        ]}
+    ]
+  },
+  sci1:{
+    key:"sci1", mode:"concept",
+    label:"Science Part I", subtitle:"Science & Technology · Paper I", chip:"S-I",
+    chapters:[
+      {no:1, title:"Gravitation",
+        items:[
+          {name:"Newton's law of gravitation", expr:"F = G m\u2081m\u2082 / r\u00B2"},
+          {name:"Acceleration due to gravity", expr:"g = GM / R\u00B2"},
+          {name:"Related ideas", expr:"free fall, escape velocity, Kepler's laws, satellites"}
+        ],
+        qs:[
+          {q:"State and explain Newton's law of gravitation.", m:2},
+          {q:"Numerical based on gravitational force or acceleration due to gravity.", m:2}
+        ]},
+      {no:2, title:"Periodic Classification of Elements",
+        items:[
+          {name:"Modern periodic law", expr:"properties are a periodic function of atomic number"},
+          {name:"Periodic trends", expr:"atomic size, valency and metallic character across a period/group"}
+        ],
+        qs:[
+          {q:"Differentiate Mendeleev's and the Modern periodic table.", m:2},
+          {q:"Explain a periodic trend using electronic configuration.", m:3}
+        ]},
+      {no:3, title:"Chemical Reactions and Equations",
+        items:[
+          {name:"Reaction types", expr:"combination, decomposition, displacement, double displacement"},
+          {name:"Redox", expr:"oxidation = loss of electrons, reduction = gain of electrons"}
+        ],
+        qs:[
+          {q:"Balance a given chemical equation and identify its type.", m:2},
+          {q:"Distinguish between exothermic and endothermic reactions with examples.", m:2}
+        ]},
+      {no:4, title:"Effects of Electric Current",
+        items:[
+          {name:"Ohm's law", expr:"V = I R"},
+          {name:"Electric power", expr:"P = VI = I\u00B2R = V\u00B2/R"},
+          {name:"Electrical energy", expr:"E = P \u00D7 t"}
+        ],
+        qs:[
+          {q:"Numerical using Ohm's law or the power formula.", m:2},
+          {q:"Compare resistances connected in series and in parallel.", m:3}
+        ]},
+      {no:5, title:"Heat",
+        items:[
+          {name:"Heat absorbed/released", expr:"Q = m c \u0394T"},
+          {name:"Modes of transfer", expr:"conduction, convection, radiation"}
+        ],
+        qs:[
+          {q:"Numerical on specific heat capacity.", m:2},
+          {q:"Explain a mode of heat transfer with a daily-life example.", m:2}
+        ]},
+      {no:6, title:"Refraction of Light",
+        items:[
+          {name:"Snell's law", expr:"n = sin i / sin r"},
+          {name:"Refractive index", expr:"depends on the pair of media and colour of light"}
+        ],
+        qs:[
+          {q:"State laws of refraction and define refractive index.", m:2},
+          {q:"Numerical on refraction through a glass slab.", m:2}
+        ]},
+      {no:7, title:"Lenses",
+        items:[
+          {name:"Lens formula", expr:"1/v \u2212 1/u = 1/f"},
+          {name:"Magnification", expr:"m = v/u = h'/h"},
+          {name:"Power of a lens", expr:"P = 1/f  (f in metres)"}
+        ],
+        qs:[
+          {q:"Numerical using the lens formula or magnification.", m:3},
+          {q:"Ray diagram for image formation by a convex/concave lens.", m:3}
+        ]},
+      {no:8, title:"Metallurgy",
+        items:[
+          {name:"Activity series", expr:"reactivity order used to choose extraction method"},
+          {name:"Extraction stages", expr:"concentration of ore \u2192 reduction \u2192 refining"}
+        ],
+        qs:[
+          {q:"Explain the extraction of a metal using its position in the activity series.", m:3},
+          {q:"Distinguish between an ore and a mineral.", m:1}
+        ]},
+      {no:9, title:"Carbon Compounds",
+        items:[
+          {name:"Homologous series", expr:"same functional group, general formula, differ by \u2013CH\u2082\u2013"},
+          {name:"Hydrocarbons", expr:"saturated (alkanes) vs unsaturated (alkenes, alkynes)"}
+        ],
+        qs:[
+          {q:"Write the IUPAC name / structural formula of a simple carbon compound.", m:2},
+          {q:"Distinguish between saturated and unsaturated hydrocarbons.", m:2}
+        ]},
+      {no:10, title:"Space Missions",
+        items:[
+          {name:"ISRO missions", expr:"Aryabhata, Chandrayaan, Mangalyaan and related satellites"},
+          {name:"Applications", expr:"communication, navigation, weather and remote-sensing satellites"}
+        ],
+        qs:[
+          {q:"Write a short note on a major Indian space mission and its significance.", m:2}
+        ]}
+    ]
+  },
+  sci2:{
+    key:"sci2", mode:"concept",
+    label:"Science Part II", subtitle:"Science & Technology · Paper II", chip:"S-II",
+    chapters:[
+      {no:1, title:"Heredity and Evolution",
+        items:[
+          {name:"Mendel's laws", expr:"law of dominance and law of segregation"},
+          {name:"Sex determination", expr:"XX (female) and XY (male) chromosome pattern in humans"}
+        ],
+        qs:[
+          {q:"Explain Mendel's monohybrid cross with a suitable example.", m:3},
+          {q:"Explain how sex is determined in humans.", m:2}
+        ]},
+      {no:2, title:"Life Processes in Living Organisms",
+        items:[
+          {name:"Nutrition", expr:"autotrophic vs heterotrophic modes of nutrition"},
+          {name:"Transportation", expr:"double circulation in humans; xylem/phloem in plants"}
+        ],
+        qs:[
+          {q:"Describe the process of nutrition / respiration in humans.", m:3},
+          {q:"Explain transportation of water and food in plants.", m:2}
+        ]},
+      {no:3, title:"Environmental Management",
+        items:[
+          {name:"Waste management", expr:"reduce, reuse, recycle; segregation at source"},
+          {name:"Sustainable development", expr:"balancing development with resource conservation"}
+        ],
+        qs:[
+          {q:"Suggest measures for managing solid waste in your locality.", m:3},
+          {q:"Explain the concept of sustainable development with an example.", m:2}
+        ]},
+      {no:4, title:"Animal Classification",
+        items:[
+          {name:"Chordates vs non-chordates", expr:"presence/absence of a notochord"},
+          {name:"Major phyla", expr:"Porifera, Coelenterata, Arthropoda, Mollusca, Chordata, etc."}
+        ],
+        qs:[
+          {q:"Classify a given animal and state the phylum it belongs to.", m:2},
+          {q:"State distinguishing features of a named phylum or class.", m:2}
+        ]},
+      {no:5, title:"Introduction to Microbiology",
+        items:[
+          {name:"Groups of microbes", expr:"bacteria, viruses, fungi, protozoa"},
+          {name:"Useful microbes", expr:"fermentation, antibiotics, biofertilisers"}
+        ],
+        qs:[
+          {q:"Explain one useful and one harmful application of microorganisms.", m:2},
+          {q:"Describe the process of fermentation with an example.", m:2}
+        ]},
+      {no:6, title:"Cell Biology and Biotechnology",
+        items:[
+          {name:"Cell division", expr:"mitosis (growth) vs meiosis (gamete formation)"},
+          {name:"Biotechnology", expr:"applications in agriculture, medicine and industry"}
+        ],
+        qs:[
+          {q:"Differentiate between mitosis and meiosis.", m:3},
+          {q:"State two applications of biotechnology in daily life.", m:2}
+        ]},
+      {no:7, title:"Social Health",
+        items:[
+          {name:"Disease types", expr:"communicable (spread by pathogens) vs lifestyle diseases"},
+          {name:"Immunity & de-addiction", expr:"vaccination; effects and management of addiction"}
+        ],
+        qs:[
+          {q:"Explain the difference between communicable and lifestyle diseases.", m:2},
+          {q:"Suggest ways to prevent the spread of a communicable disease.", m:2}
+        ]},
+      {no:8, title:"Disaster Management",
+        items:[
+          {name:"Disaster cycle", expr:"mitigation \u2192 preparedness \u2192 response \u2192 recovery"},
+          {name:"Types", expr:"natural (earthquake, flood) and man-made disasters"}
+        ],
+        qs:[
+          {q:"Explain the stages of the disaster management cycle.", m:3},
+          {q:"Suggest precautions to be taken during a named natural disaster.", m:2}
+        ]},
+      {no:9, title:"Agricultural &amp; Processing Technology",
+        items:[
+          {name:"Modern techniques", expr:"drip irrigation, organic farming, high-yield varieties"},
+          {name:"Food processing", expr:"preservation techniques that extend shelf life"}
+        ],
+        qs:[
+          {q:"Explain any one modern technique used to increase agricultural yield.", m:2},
+          {q:"State the importance of food processing and preservation.", m:2}
+        ]}
+    ]
+  }
+};
+
+const QUIZ_BANK = {
+  math1:[
+    {q:"What is the discriminant of 2x\u00B2 \u2212 4x + 3 = 0?", options:["\u22128","8","4","0"], a:0, explain:"\u0394 = b\u00B2\u22124ac = (\u22124)\u00B2 \u2212 4(2)(3) = 16 \u2212 24 = \u22128."},
+    {q:"The next term of the A.P. 5, 8, 11, 14, \u2026 is:", options:["16","17","18","20"], a:1, explain:"Common difference d = 3, so next term = 14 + 3 = 17."},
+    {q:"Two coins are tossed together. The probability of getting exactly one head is:", options:["1/4","1/2","3/4","1"], a:1, explain:"Sample space = {HH, HT, TH, TT}. Exactly one head = {HT, TH} \u2192 2/4 = 1/2."},
+    {q:"GST is levied on:", options:["Personal income","Sale of goods and services","Property ownership","Foreign travel"], a:1, explain:"GST (Goods and Services Tax) is an indirect tax charged on the sale of goods and services."},
+    {q:"In simultaneous equations, if D = 0 and Dx \u2260 0, the pair of equations has:", options:["A unique solution","No solution","Infinite solutions","Only x = 0"], a:1, explain:"When D = 0 but Dx or Dy is non-zero, the lines are parallel and the system has no solution."}
+  ],
+  math2:[
+    {q:"In a right triangle, the legs measure 6 and 8. The hypotenuse is:", options:["10","14","48","7"], a:0, explain:"By Pythagoras theorem, hyp = \u221A(6\u00B2+8\u00B2) = \u221A100 = 10 (the 6-8-10 triple)."},
+    {q:"The distance between the points (2, 3) and (5, 7) is:", options:["5","4","3","6"], a:0, explain:"d = \u221A[(5\u22122)\u00B2 + (7\u22123)\u00B2] = \u221A(9+16) = \u221A25 = 5."},
+    {q:"A tangent to a circle is always ___ to the radius at the point of contact.", options:["parallel","perpendicular","equal","half"], a:1, explain:"This is the fundamental tangent theorem of circle geometry."},
+    {q:"If sin\u03B8 = 3/5 (\u03B8 acute), then cos\u03B8 equals:", options:["4/5","3/4","5/4","5/3"], a:0, explain:"Using the 3-4-5 triple, the adjacent side is 4, so cos\u03B8 = 4/5."},
+    {q:"Volume of a cone with r = 3 cm and h = 7 cm (\u03C0 = 22/7) is:", options:["66 cm\u00B3","22 cm\u00B3","132 cm\u00B3","44 cm\u00B3"], a:0, explain:"V = \u2153\u03C0r\u00B2h = \u2153 \u00D7 22/7 \u00D7 9 \u00D7 7 = 66 cm\u00B3."}
+  ],
+  sci1:[
+    {q:"The SI unit of electric power is:", options:["Volt","Ampere","Watt","Ohm"], a:2, explain:"Power is measured in watts (W), where 1 W = 1 joule/second."},
+    {q:"In the modern periodic table, elements are arranged in order of increasing:", options:["Atomic mass","Atomic number","Number of neutrons","Valency"], a:1, explain:"The modern periodic law arranges elements by increasing atomic number."},
+    {q:"Myopia (short-sightedness) is corrected using a:", options:["Convex lens","Concave lens","Bifocal lens","Cylindrical lens"], a:1, explain:"A concave (diverging) lens shifts the image back onto the retina in myopia."},
+    {q:"Rusting of iron is best classified as a/an:", options:["Physical change","Endothermic change only","Oxidation reaction","Decomposition reaction"], a:2, explain:"Iron reacts with oxygen and moisture, losing electrons \u2014 an oxidation reaction."},
+    {q:"Snell's law of refraction is written as:", options:["n = sin r / sin i","n = sin i / sin r","n = i / r","n = v\u2081 / v\u2082 only"], a:1, explain:"Refractive index n = sin(angle of incidence) / sin(angle of refraction)."}
+  ],
+  sci2:[
+    {q:"Which structure carries hereditary information from parent to offspring?", options:["Ribosome","Chromosome","Mitochondria","Golgi body"], a:1, explain:"Chromosomes carry genes made of DNA, which pass on hereditary traits."},
+    {q:"The process by which plants lose water through their leaves is called:", options:["Respiration","Transpiration","Photosynthesis","Excretion"], a:1, explain:"Transpiration is the evaporation of water from aerial parts, mainly through stomata."},
+    {q:"Mitosis results in the formation of:", options:["2 diploid daughter cells","4 haploid cells","2 haploid cells","1 diploid cell"], a:0, explain:"Mitosis produces two genetically identical diploid daughter cells for growth and repair."},
+    {q:"Which of these is a communicable disease?", options:["Diabetes","Tuberculosis","Arthritis","Cancer"], a:1, explain:"Tuberculosis is caused by a bacterium and spreads from person to person."},
+    {q:"The first stage of the disaster management cycle, carried out before a disaster strikes, is:", options:["Response","Recovery","Mitigation & preparedness","Rehabilitation"], a:2, explain:"Mitigation and preparedness reduce risk and build readiness before a disaster occurs."}
+  ]
+};
+
+/* ============================================================
+   STORAGE — window.storage when available, in-memory fallback
+   otherwise (so the file also works when opened standalone).
+   ============================================================ */
+const memoryFallback = {};
+async function storeGet(key){
+  if (window.storage && typeof window.storage.get === "function"){
+    try{
+      const r = await window.storage.get(key, false);
+      return r ? r.value : null;
+    }catch(e){ return null; }
+  }
+  return Object.prototype.hasOwnProperty.call(memoryFallback,key) ? memoryFallback[key] : null;
+}
+async function storeSet(key, value){
+  if (window.storage && typeof window.storage.set === "function"){
+    try{ await window.storage.set(key, value, false); return true; }catch(e){ /* fall through */ }
+  }
+  memoryFallback[key] = value;
+  return true;
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  view:"dashboard",
+  subject:null,
+  progress:{},      // chapterId -> "not-started" | "in-progress" | "done"
+  notes:{},         // chapterId -> string
+  planner:[],        // [{id,text,subject,done,createdAt}]
+  quizHistory:[],    // [{date,subject,score,total}]
+  meta:{},
+  uiOpen:new Set(),  // expanded chapter ids
+  plannerFilter:"all",
+  vaultFilter:"all",
+  quiz:{active:false, finished:false, subject:null, questions:[], index:0, score:0, selected:null, answered:false},
+  timer:{mode:"focus", duration:{focus:1500, short:300, long:900}, remaining:1500, running:false, subject:"", intervalId:null}
+};
+
+function chapterId(subjectKey, no){ return subjectKey + "-" + no; }
+
+function todayStr(){ return new Date().toDateString(); }
+function yesterdayStr(){ const d=new Date(); d.setDate(d.getDate()-1); return d.toDateString(); }
+
+function defaultExamDate(){
+  const now = new Date();
+  let year = now.getFullYear();
+  let mar1 = new Date(year,2,1);
+  if (now > mar1) mar1 = new Date(year+1,2,1);
+  return mar1.toISOString().slice(0,10);
+}
+
+function defaultMeta(){
+  return {examDate:defaultExamDate(), streak:0, lastActiveDate:null, pomodorosTotal:0, pomodorosToday:0, lastPomodoroDate:null, theme:"paper"};
+}
+
+/* ============================================================
+   INIT / LOAD
+   ============================================================ */
+async function loadState(){
+  const [progressRaw, notesRaw, plannerRaw, quizRaw, metaRaw] = await Promise.all([
+    storeGet("progress"), storeGet("notes"), storeGet("planner"), storeGet("quizHistory"), storeGet("meta")
+  ]);
+  try{ state.progress = progressRaw ? JSON.parse(progressRaw) : {}; }catch(e){ state.progress = {}; }
+  try{ state.notes = notesRaw ? JSON.parse(notesRaw) : {}; }catch(e){ state.notes = {}; }
+  try{ state.planner = plannerRaw ? JSON.parse(plannerRaw) : []; }catch(e){ state.planner = []; }
+  try{ state.quizHistory = quizRaw ? JSON.parse(quizRaw) : []; }catch(e){ state.quizHistory = []; }
+  try{ state.meta = metaRaw ? JSON.parse(metaRaw) : defaultMeta(); }catch(e){ state.meta = defaultMeta(); }
+  if (!state.meta.examDate) state.meta.examDate = defaultExamDate();
+
+  updateStreak();
+  applyTheme(state.meta.theme || "paper");
+}
+
+function updateStreak(){
+  const today = todayStr();
+  if (state.meta.lastActiveDate === today){ /* already counted today */ }
+  else if (state.meta.lastActiveDate === yesterdayStr()){ state.meta.streak = (state.meta.streak||0) + 1; }
+  else { state.meta.streak = 1; }
+  state.meta.lastActiveDate = today;
+  if (state.meta.lastPomodoroDate !== today) state.meta.pomodorosToday = 0;
+  storeSet("meta", JSON.stringify(state.meta));
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function esc(str){
+  return String(str).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function subjectList(){ return ["math1","math2","sci1","sci2"]; }
+function totalChapters(){ return subjectList().reduce((n,k)=>n+SUBJECTS[k].chapters.length,0); }
+function doneChapters(){
+  return Object.values(state.progress).filter(function(s){return s==="done";}).length;
+}
+function subjectDoneCount(key){
+  const chs = SUBJECTS[key].chapters;
+  let n=0;
+  chs.forEach(function(c){ if (state.progress[chapterId(key,c.no)]==="done") n++; });
+  return n;
+}
+function fmtTime(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function daysUntilExam(){
+  const target = new Date(state.meta.examDate+"T00:00:00");
+  const now = new Date();
+  const diff = Math.ceil((target - now) / 86400000);
+  return diff;
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  const isSlate = theme === "slate";
+  document.getElementById("themeLabelRail").textContent = isSlate ? "Slate mode" : "Paper mode";
+  const iconPath = isSlate
+    ? '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>'
+    : '<circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>';
+  document.getElementById("themeIconRail").innerHTML = iconPath;
+  document.getElementById("themeIconTop").innerHTML = iconPath;
+}
+
+/* ============================================================
+   RENDER — dispatcher
+   ============================================================ */
+const VIEW_TITLES = {
+  dashboard:"Dashboard", progress:"My Progress",
+  subject:"Subject", formulas:"Formula & Concept Vault",
+  quiz:"Practice Quiz", planner:"Study Planner", timer:"Focus Timer"
+};
+
+function setActiveNav(){
+  document.querySelectorAll(".nav-item").forEach(function(btn){
+    const v = btn.getAttribute("data-view");
+    const s = btn.getAttribute("data-subject");
+    const active = v === state.view && (v !== "subject" || s === state.subject);
+    btn.classList.toggle("active", active);
+  });
+}
+
+function render(){
+  const main = document.getElementById("mainContent");
+  let title = VIEW_TITLES[state.view] || "Pixel Study";
+  let html = "";
+  switch(state.view){
+    case "dashboard": html = renderDashboard(); break;
+    case "progress": html = renderProgress(); break;
+    case "subject":
+      html = renderSubject(state.subject);
+      title = SUBJECTS[state.subject].label;
+      break;
+    case "formulas": html = renderVault(); break;
+    case "quiz": html = renderQuiz(); break;
+    case "planner": html = renderPlanner(); break;
+    case "timer": html = renderTimer(); break;
+    default: html = renderDashboard();
+  }
+  main.innerHTML = '<div class="view">' + html + '</div>';
+  document.getElementById("viewTitle").textContent = title;
+  setActiveNav();
+  window.scrollTo({top:0, behavior:"auto"});
+  if (state.view === "timer") updateTimerDOM();
+  updateMiniTimer();
+}
+
+/* ---------- Dashboard ---------- */
+function renderDashboard(){
+  const done = doneChapters(), total = totalChapters();
+  const pct = total ? Math.round((done/total)*100) : 0;
+  const circumference = 2*Math.PI*58;
+  const offset = circumference - (pct/100)*circumference;
+  const days = daysUntilExam();
+  const examLabel = days < 0 ? "Exam date passed" : days === 0 ? "Exam is today" : days + " days to the Board exam";
+
+  const subjectCards = subjectList().map(function(key){
+    const s = SUBJECTS[key];
+    const d = subjectDoneCount(key), t = s.chapters.length;
+    const p = t ? Math.round((d/t)*100) : 0;
+    return '<button class="subject-card" data-action="nav" data-view="subject" data-subject="'+key+'">'+
+      '<div class="subject-top">'+
+        '<span class="subject-chip" data-s="'+key+'">'+s.chip+'</span>'+
+        '<span class="subject-name">'+esc(s.label)+'<small>'+esc(s.subtitle)+'</small></span>'+
+      '</div>'+
+      '<div class="bar-track"><div class="bar-fill" style="width:'+p+'%;background:var(--c-'+key+')"></div></div>'+
+      '<div class="subject-meta"><span>'+d+' of '+t+' chapters</span><b>'+p+'%</b></div>'+
+      '<span class="subject-cta">Continue studying &rarr;</span>'+
+    '</button>';
+  }).join("");
+
+  const pendingTasks = state.planner.filter(function(t){return !t.done;}).slice(0,3);
+  const tasksHtml = pendingTasks.length ? pendingTasks.map(function(t){
+    return '<div class="mini-task"><span class="dot"></span><span>'+esc(t.text)+'</span></div>';
+  }).join("") : '<p class="empty-note">No pending tasks &mdash; add a study goal in the Planner.</p>';
+
+  const lastQuiz = state.quizHistory.length ? state.quizHistory[state.quizHistory.length-1] : null;
+  const quizHtml = lastQuiz
+    ? '<div class="mini-task"><span class="dot" style="background:var(--focus)"></span><span>'+esc(SUBJECTS[lastQuiz.subject]?SUBJECTS[lastQuiz.subject].label:"Mixed")+' &mdash; scored '+lastQuiz.score+'/'+lastQuiz.total+' on '+esc(lastQuiz.date)+'</span></div>'
+    : '<p class="empty-note">No attempts yet &mdash; test yourself in Practice Quiz.</p>';
+
+  return ''+
+  '<div class="dash-hero">'+
+    '<div class="hero-card">'+
+      '<div class="hero-greet">Ready for today\u2019s revision?</div>'+
+      '<p class="hero-sub">Track every chapter across all four papers, keep formulas within reach, and time your focus sessions &mdash; all in one place.</p>'+
+      '<button class="exam-chip" data-action="exam-date-edit-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><b>'+esc(examLabel)+'</b></button>'+
+      '<div id="examEditRow" class="exam-edit" hidden>'+
+        '<input type="date" id="examDateInput" value="'+esc(state.meta.examDate)+'">'+
+        '<button class="btn btn-primary btn-sm" data-action="exam-date-save">Save date</button>'+
+      '</div>'+
+      '<div class="hero-stats">'+
+        '<div class="hero-stat"><b>'+done+'/'+total+'</b><span>Chapters done</span></div>'+
+        '<div class="hero-stat"><b>'+(state.meta.streak||0)+'</b><span>Day streak</span></div>'+
+        '<div class="hero-stat"><b>'+(state.meta.pomodorosTotal||0)+'</b><span>Focus sessions</span></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="ring-card">'+
+      '<div class="ring-wrap"><svg viewBox="0 0 132 132">'+
+        '<circle class="ring-track" cx="66" cy="66" r="58"/>'+
+        '<circle class="ring-fill" cx="66" cy="66" r="58" stroke-dasharray="'+circumference+'" stroke-dashoffset="'+offset+'"/>'+
+      '</svg><div class="ring-center"><b>'+pct+'%</b><span>Syllabus covered</span></div></div>'+
+    '</div>'+
+  '</div>'+
+  '<div class="section-head"><p class="eyebrow">Section B</p><h2>Your four papers</h2></div>'+
+  '<div class="subject-grid">'+subjectCards+'</div>'+
+  '<div class="dash-lower">'+
+    '<div class="mini-panel"><h3>Next up in your planner <button class="link" data-action="nav" data-view="planner">Open &rarr;</button></h3>'+tasksHtml+'</div>'+
+    '<div class="mini-panel"><h3>Latest practice attempt <button class="link" data-action="nav" data-view="quiz">Practice &rarr;</button></h3>'+quizHtml+'</div>'+
+  '</div>';
+}
+
+/* ---------- Subject view ---------- */
+function renderSubject(key){
+  const s = SUBJECTS[key];
+  const d = subjectDoneCount(key), t = s.chapters.length;
+  const p = t ? Math.round((d/t)*100) : 0;
+  const label = s.mode === "formula" ? "Key Formulas" : "Key Concepts";
+
+  const chaptersHtml = s.chapters.map(function(c){
+    const id = chapterId(key, c.no);
+    const status = state.progress[id] || "not-started";
+    const isOpen = state.uiOpen.has(id);
+    const itemsHtml = c.items.map(function(it){
+      return '<div class="formula-row"><span class="f-name">'+esc(it.name)+'</span><span class="f-expr">'+it.expr+'</span></div>';
+    }).join("");
+    const qsHtml = c.qs.map(function(qq){
+      return '<div class="q-row"><span>'+esc(qq.q)+'</span><span class="marks">'+qq.m+'M</span></div>';
+    }).join("");
+    const noteVal = state.notes[id] || "";
+    return ''+
+    '<div class="sheet-card chapter-card'+(isOpen?" open":"")+'" data-chid="'+id+'">'+
+      (status==="done" ? '<span class="stamp">Revised \u2713</span>' : '')+
+      '<div class="chapter-head" data-action="toggle-chapter" data-id="'+id+'">'+
+        '<span class="chapter-no">Ch. '+c.no+'</span>'+
+        '<span class="chapter-title">'+esc(c.title)+'<small>'+c.items.length+' '+label.toLowerCase()+' &middot; '+c.qs.length+' important questions</small></span>'+
+        '<span class="status-group">'+
+          statusBtn(id,status,"not-started","\u2014","Not started")+
+          statusBtn(id,status,"in-progress","\u25D0","In progress")+
+          statusBtn(id,status,"done","\u2713","Done")+
+        '</span>'+
+        '<svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      '</div>'+
+      '<div class="chapter-body">'+
+        '<h4>'+label+'</h4>'+itemsHtml+
+        '<h4>Important Questions</h4>'+qsHtml+
+        '<h4>My Notes</h4>'+
+        '<textarea class="notes-area" data-role="notes" data-id="'+id+'" placeholder="Jot a quick summary, a tricky point, or a mistake to avoid next time&hellip;">'+esc(noteVal)+'</textarea>'+
+        '<div class="notes-foot"><span class="saved-flag" data-saved-for="'+id+'">Saved</span></div>'+
+      '</div>'+
+    '</div>';
+  }).join("");
+
+  return ''+
+  '<div class="subject-header">'+
+    '<span class="subject-icon-lg" data-s="'+key+'">'+s.chip+'</span>'+
+    '<div class="subject-progress-line">'+
+      '<h2 style="margin-bottom:4px">'+esc(s.label)+'</h2>'+
+      '<div class="bar-track"><div class="bar-fill" style="width:'+p+'%;background:var(--c-'+key+')"></div></div>'+
+      '<div class="subject-progress-num">'+d+' of '+t+' chapters revised &middot; '+p+'%</div>'+
+    '</div>'+
+  '</div>'+
+  chaptersHtml;
+}
+
+function statusBtn(id, current, val, glyph, label){
+  return '<button class="status-btn'+(current===val?" active":"")+'" data-status="'+val+'" data-action="set-status" data-id="'+id+'" aria-label="'+label+'" title="'+label+'" data-stop="1">'+glyph+'</button>';
+}
+
+/* ---------- Formula / Concept Vault ---------- */
+function renderVault(){
+  const filter = state.vaultFilter;
+  const tabs = ['all'].concat(subjectList()).map(function(key){
+    const lbl = key==="all" ? "All papers" : SUBJECTS[key].chip+" \u00B7 "+SUBJECTS[key].label;
+    return '<button class="filter-chip'+(filter===key?" active":"")+'" data-action="vault-filter" data-key="'+key+'">'+esc(lbl)+'</button>';
+  }).join("");
+
+  const q = (state.vaultQuery||"").toLowerCase();
+  const groups = subjectList().filter(function(k){ return filter==="all" || filter===k; }).map(function(key){
+    const s = SUBJECTS[key];
+    const label = s.mode === "formula" ? "Key Formulas" : "Key Concepts";
+    const chapters = s.chapters.map(function(c){
+      const itemsFiltered = c.items.filter(function(it){
+        return !q || it.name.toLowerCase().indexOf(q)>-1 || c.title.toLowerCase().indexOf(q)>-1;
+      });
+      if (q && itemsFiltered.length===0 && c.title.toLowerCase().indexOf(q)===-1) return "";
+      const rows = (q?itemsFiltered:c.items).map(function(it){
+        return '<div class="formula-row"><span class="f-name">'+esc(it.name)+'</span><span class="f-expr">'+it.expr+'</span></div>';
+      }).join("");
+      return '<div class="vault-chapter"><div class="vc-head">Ch. '+c.no+' &middot; '+esc(c.title)+'</div>'+rows+'</div>';
+    }).join("");
+    if (!chapters) return "";
+    return '<div class="vault-group"><div class="vault-group-title"><span class="subject-chip" data-s="'+key+'">'+s.chip+'</span><h3>'+esc(s.label)+' &mdash; '+label+'</h3></div>'+chapters+'</div>';
+  }).join("");
+
+  return ''+
+  '<div class="section-head"><p class="eyebrow">Section C</p><h2>Formula &amp; Concept Vault</h2><p class="section-sub">Every key formula and concept from all four papers, in one quick-reference page for last-minute revision.</p></div>'+
+  '<div class="search-wrap" style="width:100%;max-width:360px;margin-bottom:16px;">'+
+    '<svg class="search-ic" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'+
+    '<input id="vaultSearch" type="text" placeholder="Filter formulas or chapter names&hellip;" value="'+esc(state.vaultQuery||"")+'">'+
+  '</div>'+
+  '<div class="vault-filters">'+tabs+'</div>'+
+  (groups || '<p class="empty-note">No matches &mdash; try a different search term.</p>');
+}
+
+/* ---------- Quiz ---------- */
+function renderQuiz(){
+  if (!state.quiz.active) return renderQuizSelect();
+  if (state.quiz.finished) return renderQuizResult();
+  return renderQuizQuestion();
+}
+
+function renderQuizSelect(){
+  const cards = subjectList().map(function(key){
+    const s = SUBJECTS[key];
+    return '<button class="quiz-opt-card" data-action="quiz-start" data-subject="'+key+'"><b>'+esc(s.label)+'</b><span>'+QUIZ_BANK[key].length+' questions &middot; '+esc(s.subtitle)+'</span></button>';
+  }).join("");
+  return ''+
+  '<div class="section-head"><p class="eyebrow">Section C</p><h2>Practice Quiz</h2><p class="section-sub">Test yourself paper by paper, or take a mixed set that draws from all four. Every question comes with an explanation.</p></div>'+
+  '<div class="quiz-select-grid">'+cards+
+    '<button class="quiz-opt-card" data-action="quiz-start" data-subject="mixed"><b>Mixed &mdash; All Papers</b><span>10 questions drawn from every subject</span></button>'+
+  '</div>';
+}
+
+function renderQuizQuestion(){
+  const qz = state.quiz;
+  const q = qz.questions[qz.index];
+  const letters = ["A","B","C","D"];
+  const optionsHtml = q.options.map(function(opt, i){
+    let cls = "quiz-option";
+    if (qz.answered){
+      if (i===q.a) cls += " correct";
+      else if (i===qz.selected) cls += " wrong";
+    }
+    return '<button class="'+cls+'" data-action="quiz-select" data-index="'+i+'" '+(qz.answered?"disabled":"")+'>'+
+      '<span class="opt-letter">'+letters[i]+'</span><span>'+esc(opt)+'</span></button>';
+  }).join("");
+  return ''+
+  '<div class="quiz-card">'+
+    '<div class="quiz-progress"><span>Question '+(qz.index+1)+' of '+qz.questions.length+'</span><span>Score '+qz.score+'/'+qz.questions.length+'</span></div>'+
+    '<div class="quiz-q">'+esc(q.q)+'</div>'+
+    '<div class="quiz-options">'+optionsHtml+'</div>'+
+    (qz.answered ? '<div class="quiz-explain">'+esc(q.explain)+'</div>' : '')+
+    '<div class="quiz-foot">'+
+      (qz.answered ? '<button class="btn btn-primary" data-action="quiz-next">'+(qz.index+1<qz.questions.length?"Next question":"See result")+'</button>' : '<button class="btn btn-ghost" data-action="quiz-exit">Exit quiz</button>')+
+    '</div>'+
+  '</div>';
+}
+
+function renderQuizResult(){
+  const qz = state.quiz;
+  const pct = Math.round((qz.score/qz.questions.length)*100);
+  let msg;
+  if (pct>=80) msg = "Excellent \u2014 this paper is well in hand. Keep it sharp with a quick weekly repeat.";
+  else if (pct>=50) msg = "Good progress. Revisit the questions you missed in the Formula Vault before the next attempt.";
+  else msg = "This paper needs more revision \u2014 work through the chapter notes and try again.";
+  return ''+
+  '<div class="quiz-card quiz-result">'+
+    '<p class="eyebrow" style="text-align:center">Quiz complete</p>'+
+    '<div class="big-score">'+qz.score+'/'+qz.questions.length+'</div>'+
+    '<p>'+pct+'% correct &middot; '+esc(msg)+'</p>'+
+    '<div class="quiz-result-actions">'+
+      '<button class="btn btn-primary" data-action="quiz-retry">Try again</button>'+
+      '<button class="btn btn-ghost" data-action="quiz-exit">Back to Study Tools</button>'+
+    '</div>'+
+  '</div>';
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    const tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function startQuiz(subjectKey){
+  let questions;
+  if (subjectKey === "mixed"){
+    let all = [];
+    subjectList().forEach(function(k){
+      QUIZ_BANK[k].forEach(function(item){ all.push(Object.assign({subject:k}, item)); });
+    });
+    questions = shuffle(all).slice(0,10);
+  } else {
+    questions = QUIZ_BANK[subjectKey].map(function(item){ return Object.assign({subject:subjectKey}, item); });
+  }
+  state.quiz = {active:true, finished:false, subject:subjectKey, questions:questions, index:0, score:0, selected:null, answered:false};
+  render();
+}
+
+/* ---------- Planner ---------- */
+function renderPlanner(){
+  const filter = state.plannerFilter;
+  const filtered = state.planner.filter(function(t){
+    if (filter==="pending") return !t.done;
+    if (filter==="done") return t.done;
+    return true;
+  });
+  const rows = filtered.length ? filtered.map(function(t){
+    const s = t.subject && SUBJECTS[t.subject] ? SUBJECTS[t.subject].chip : "All";
+    return '<div class="task-row'+(t.done?" done":"")+'">'+
+      '<button class="task-check" data-action="planner-toggle" data-id="'+t.id+'" aria-label="Mark task done">'+(t.done?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+'</button>'+
+      '<span class="task-text">'+esc(t.text)+'</span>'+
+      '<span class="task-tag" data-s="'+(t.subject||"all")+'">'+esc(s)+'</span>'+
+      '<button class="task-del" data-action="planner-delete" data-id="'+t.id+'" aria-label="Delete task"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>'+
+    '</div>';
+  }).join("") : '<p class="empty-note">No tasks here yet &mdash; add a study goal above.</p>';
+
+  const subjectOptions = subjectList().map(function(k){ return '<option value="'+k+'">'+SUBJECTS[k].chip+' &mdash; '+esc(SUBJECTS[k].label)+'</option>'; }).join("");
+
+  return ''+
+  '<div class="section-head"><p class="eyebrow">Section C</p><h2>Study Planner</h2><p class="section-sub">Set small, concrete study goals for the day and check them off as you go.</p></div>'+
+  '<form class="planner-form" id="plannerForm">'+
+    '<input type="text" id="plannerInput" placeholder="e.g. Revise Trigonometry formulas" maxlength="140">'+
+    '<select id="plannerSubject"><option value="">No subject tag</option>'+subjectOptions+'</select>'+
+    '<button type="submit" class="btn btn-primary">Add task</button>'+
+  '</form>'+
+  '<div class="planner-tabs">'+
+    tabBtn("all","All",filter)+tabBtn("pending","Pending",filter)+tabBtn("done","Done",filter)+
+  '</div>'+
+  rows;
+}
+function tabBtn(val,label,current){
+  return '<button class="planner-tab'+(current===val?" active":"")+'" data-action="planner-filter" data-key="'+val+'">'+label+'</button>';
+}
+
+/* ---------- Timer ---------- */
+function renderTimer(){
+  const t = state.timer;
+  const subjectOptions = subjectList().map(function(k){ return '<button class="filter-chip'+(t.subject===k?" active":"")+'" data-action="timer-subject" data-key="'+k+'">'+SUBJECTS[k].chip+'</button>'; }).join("");
+  return ''+
+  '<div class="section-head" style="text-align:center"><p class="eyebrow">Section C</p><h2>Focus Timer</h2><p class="section-sub" style="margin-left:auto;margin-right:auto">A simple Pomodoro timer to structure your revision into focused blocks.</p></div>'+
+  '<div class="timer-wrap">'+
+    '<div class="timer-modes">'+
+      modeBtn("focus","Focus 25",t)+modeBtn("short","Short break 5",t)+modeBtn("long","Long break 15",t)+
+    '</div>'+
+    '<div class="timer-face'+(t.running?" running":"")+'" id="timerFace">'+
+      '<div id="timerDisplay">'+fmtTime(t.remaining)+'</div>'+
+      '<div class="timer-label">'+(t.mode==="focus"?"Focus session":t.mode==="short"?"Short break":"Long break")+'</div>'+
+    '</div>'+
+    '<div class="timer-controls">'+
+      (t.running ? '<button class="btn btn-primary" data-action="timer-pause">Pause</button>' : '<button class="btn btn-primary" data-action="timer-start">Start</button>')+
+      '<button class="btn btn-ghost" data-action="timer-reset">Reset</button>'+
+    '</div>'+
+    '<p class="section-sub" style="text-align:center;margin-bottom:8px">Tag this session with a subject (optional)</p>'+
+    '<div class="timer-subject">'+subjectOptions+'</div>'+
+    '<div class="timer-stats">'+
+      '<div class="hero-stat"><b>'+(state.meta.pomodorosToday||0)+'</b><span>Sessions today</span></div>'+
+      '<div class="hero-stat"><b>'+(state.meta.pomodorosTotal||0)+'</b><span>All-time sessions</span></div>'+
+    '</div>'+
+  '</div>';
+}
+function modeBtn(val,label,t){
+  return '<button class="timer-mode-btn'+(t.mode===val?" active":"")+'" data-action="timer-mode" data-key="'+val+'">'+label+'</button>';
+}
+
+/* ---------- Progress / Analytics ---------- */
+function renderProgress(){
+  const done = doneChapters(), total = totalChapters();
+  const pct = total ? Math.round((done/total)*100) : 0;
+  const bars = subjectList().map(function(key){
+    const s = SUBJECTS[key];
+    const d = subjectDoneCount(key), t = s.chapters.length;
+    const p = t ? Math.round((d/t)*100) : 0;
+    return '<div class="subject-bar-row"><span class="subject-chip sb-chip" data-s="'+key+'">'+s.chip+'</span>'+
+      '<div class="sb-info"><b>'+esc(s.label)+' &middot; '+d+'/'+t+'</b><div class="bar-track"><div class="bar-fill" style="width:'+p+'%;background:var(--c-'+key+')"></div></div></div>'+
+      '<span class="mono" style="font-family:\'IBM Plex Mono\',monospace;font-size:.78rem;color:var(--ink-soft)">'+p+'%</span></div>';
+  }).join("");
+
+  const history = state.quizHistory.slice(-10).reverse();
+  const histHtml = history.length ? history.map(function(h){
+    const p = Math.round((h.score/h.total)*100);
+    const lbl = h.subject==="mixed" ? "Mixed" : (SUBJECTS[h.subject]?SUBJECTS[h.subject].chip:h.subject);
+    return '<div class="quiz-history-row"><span style="width:70px;flex:0 0 auto;font-weight:600">'+esc(lbl)+'</span><div class="qh-bar-track"><div class="qh-bar-fill" style="width:'+p+'%"></div></div><span style="font-family:\'IBM Plex Mono\',monospace;flex:0 0 auto">'+h.score+'/'+h.total+'</span></div>';
+  }).join("") : '<p class="empty-note">No practice attempts yet &mdash; head to Practice Quiz to test yourself.</p>';
+
+  return ''+
+  '<div class="section-head"><p class="eyebrow">Section A</p><h2>My Progress</h2><p class="section-sub">A quick look at how your revision is tracking across all four papers.</p></div>'+
+  '<div class="progress-grid">'+
+    '<div class="mini-panel"><h3>Chapters revised</h3>'+bars+'</div>'+
+    '<div class="mini-panel"><h3>Recent quiz attempts</h3>'+histHtml+'</div>'+
+  '</div>'+
+  '<div class="mini-panel">'+
+    '<h3>Overall &amp; data</h3>'+
+    '<p class="section-sub" style="margin-bottom:14px">'+pct+'% of the syllabus is marked done ('+done+' of '+total+' chapters), with a '+(state.meta.streak||0)+'-day study streak and '+(state.meta.pomodorosTotal||0)+' completed focus sessions.</p>'+
+    '<div class="data-actions">'+
+      '<button class="btn btn-ghost btn-sm" data-action="export-data">Export my data</button>'+
+      '<button class="btn btn-danger btn-sm" data-action="reset-data">Reset all data</button>'+
+    '</div>'+
+  '</div>';
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+function buildSearchIndex(){
+  const idx = [];
+  subjectList().forEach(function(key){
+    const s = SUBJECTS[key];
+    s.chapters.forEach(function(c){
+      idx.push({type:"chapter", label:c.title, meta:s.chip+" \u00B7 Ch. "+c.no, subject:key, chapterNo:c.no});
+      c.items.forEach(function(it){
+        idx.push({type:"formula", label:it.name, meta:s.chip+" \u00B7 Ch. "+c.no+" \u00B7 "+c.title, subject:key, chapterNo:c.no});
+      });
+    });
+  });
+  return idx;
+}
+const SEARCH_INDEX = buildSearchIndex();
+
+function runSearch(query){
+  const box = document.getElementById("searchResults");
+  const q = query.trim().toLowerCase();
+  if (!q){ box.hidden = true; box.innerHTML = ""; return; }
+  const matches = SEARCH_INDEX.filter(function(item){ return item.label.toLowerCase().indexOf(q) > -1; }).slice(0,8);
+  if (!matches.length){
+    box.innerHTML = '<div class="search-empty">No matches for "'+esc(query)+'"</div>';
+  } else {
+    box.innerHTML = matches.map(function(m){
+      return '<button data-action="search-result" data-subject="'+m.subject+'" data-chapter="'+m.chapterNo+'"><span class="sr-title">'+esc(m.label)+'</span><span class="sr-meta">'+esc(m.meta)+'</span></button>';
+    }).join("");
+  }
+  box.hidden = false;
+}
+
+/* ============================================================
+   TIMER LOGIC
+   ============================================================ */
+function updateMiniTimer(){
+  const badge = document.getElementById("miniTimer");
+  const show = state.timer.running && state.view !== "timer";
+  badge.classList.toggle("show", show);
+  document.getElementById("miniTimerText").textContent = fmtTime(state.timer.remaining);
+}
+function updateTimerDOM(){
+  const disp = document.getElementById("timerDisplay");
+  if (disp) disp.textContent = fmtTime(state.timer.remaining);
+}
+function updateTimerDisplay(){
+  updateTimerDOM();
+  updateMiniTimer();
+}
+function playBeep(){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.value = 880;
+    o.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.4);
+    o.start();
+    o.stop(ctx.currentTime+0.42);
+    setTimeout(function(){ try{ctx.close();}catch(e){} }, 600);
+  }catch(e){ /* audio unavailable, ignore */ }
+}
+function timerTick(){
+  state.timer.remaining--;
+  updateTimerDisplay();
+  if (state.timer.remaining <= 0){
+    clearInterval(state.timer.intervalId);
+    state.timer.running = false;
+    if (state.timer.mode === "focus"){
+      state.meta.pomodorosTotal = (state.meta.pomodorosTotal||0) + 1;
+      state.meta.pomodorosToday = (state.meta.pomodorosToday||0) + 1;
+      state.meta.lastPomodoroDate = todayStr();
+      storeSet("meta", JSON.stringify(state.meta));
+    }
+    playBeep();
+    showToast(state.timer.mode==="focus" ? "Focus session complete \u2014 well done." : "Break\u2019s over \u2014 ready for another round?");
+    state.timer.remaining = state.timer.duration[state.timer.mode];
+    render();
+  }
+}
+function timerStart(){
+  if (state.timer.running) return;
+  state.timer.running = true;
+  state.timer.intervalId = setInterval(timerTick, 1000);
+  render();
+}
+function timerPause(){
+  clearInterval(state.timer.intervalId);
+  state.timer.running = false;
+  render();
+}
+function timerReset(){
+  clearInterval(state.timer.intervalId);
+  state.timer.running = false;
+  state.timer.remaining = state.timer.duration[state.timer.mode];
+  render();
+}
+function timerSetMode(mode){
+  if (state.timer.running) return;
+  state.timer.mode = mode;
+  state.timer.remaining = state.timer.duration[mode];
+  render();
+}
+
+/* ============================================================
+   EVENT HANDLING (delegated)
+   ============================================================ */
+const notesSaveTimers = {};
+function onNotesInput(id, value){
+  state.notes[id] = value;
+  clearTimeout(notesSaveTimers[id]);
+  notesSaveTimers[id] = setTimeout(function(){
+    storeSet("notes", JSON.stringify(state.notes)).then(function(){
+      const flag = document.querySelector('[data-saved-for="'+id+'"]');
+      if (flag){
+        flag.classList.add("visible");
+        setTimeout(function(){ flag.classList.remove("visible"); }, 1500);
+      }
+    });
+  }, 700);
+}
+
+function closeDrawer(){
+  document.getElementById("navRail").classList.remove("open");
+  document.getElementById("drawerOverlay").classList.remove("open");
+}
+function toggleDrawer(){
+  document.getElementById("navRail").classList.toggle("open");
+  document.getElementById("drawerOverlay").classList.toggle("open");
+}
+
+document.addEventListener("click", function(e){
+  const target = e.target.closest("[data-action]");
+  if (!target){
+    // close search dropdown / drawer when clicking elsewhere
+    if (!e.target.closest(".search-wrap")){
+      const sr = document.getElementById("searchResults");
+      if (sr) { sr.hidden = true; }
+    }
+    return;
+  }
+  const action = target.getAttribute("data-action");
+
+  switch(action){
+    case "nav": {
+      const view = target.getAttribute("data-view");
+      const subject = target.getAttribute("data-subject");
+      state.view = view;
+      if (view === "subject") state.subject = subject;
+      closeDrawer();
+      render();
+      break;
+    }
+    case "nav-drawer-toggle": toggleDrawer(); break;
+    case "theme-toggle": {
+      const next = state.meta.theme === "slate" ? "paper" : "slate";
+      state.meta.theme = next;
+      applyTheme(next);
+      storeSet("meta", JSON.stringify(state.meta));
+      break;
+    }
+    case "toggle-chapter": {
+      const id = target.getAttribute("data-id");
+      if (state.uiOpen.has(id)) state.uiOpen.delete(id); else state.uiOpen.add(id);
+      render();
+      break;
+    }
+    case "set-status": {
+      const id = target.getAttribute("data-id");
+      const status = target.getAttribute("data-status");
+      state.progress[id] = status;
+      state.uiOpen.add(id);
+      storeSet("progress", JSON.stringify(state.progress));
+      if (status === "done") showToast("Chapter marked as revised.");
+      render();
+      break;
+    }
+    case "exam-date-edit-toggle": {
+      const row = document.getElementById("examEditRow");
+      if (row) row.hidden = !row.hidden;
+      break;
+    }
+    case "exam-date-save": {
+      const input = document.getElementById("examDateInput");
+      if (input && input.value){
+        state.meta.examDate = input.value;
+        storeSet("meta", JSON.stringify(state.meta));
+        showToast("Exam date updated.");
+        render();
+      }
+      break;
+    }
+    case "vault-filter": {
+      state.vaultFilter = target.getAttribute("data-key");
+      render();
+      break;
+    }
+    case "quiz-start": startQuiz(target.getAttribute("data-subject")); break;
+    case "quiz-select": {
+      if (state.quiz.answered) break;
+      const idx = parseInt(target.getAttribute("data-index"),10);
+      state.quiz.selected = idx;
+      state.quiz.answered = true;
+      if (idx === state.quiz.questions[state.quiz.index].a) state.quiz.score++;
+      render();
+      break;
+    }
+    case "quiz-next": {
+      if (state.quiz.index + 1 < state.quiz.questions.length){
+        state.quiz.index++;
+        state.quiz.selected = null;
+        state.quiz.answered = false;
+      } else {
+        state.quiz.finished = true;
+        const record = {date:new Date().toLocaleDateString(), subject:state.quiz.subject, score:state.quiz.score, total:state.quiz.questions.length};
+        state.quizHistory.push(record);
+        storeSet("quizHistory", JSON.stringify(state.quizHistory));
+      }
+      render();
+      break;
+    }
+    case "quiz-retry": startQuiz(state.quiz.subject); break;
+    case "quiz-exit": {
+      state.quiz = {active:false, finished:false, subject:null, questions:[], index:0, score:0, selected:null, answered:false};
+      render();
+      break;
+    }
+    case "planner-toggle": {
+      const id = target.getAttribute("data-id");
+      const task = state.planner.find(function(t){return t.id===id;});
+      if (task) task.done = !task.done;
+      storeSet("planner", JSON.stringify(state.planner));
+      render();
+      break;
+    }
+    case "planner-delete": {
+      const id = target.getAttribute("data-id");
+      state.planner = state.planner.filter(function(t){return t.id!==id;});
+      storeSet("planner", JSON.stringify(state.planner));
+      render();
+      break;
+    }
+    case "planner-filter": {
+      state.plannerFilter = target.getAttribute("data-key");
+      render();
+      break;
+    }
+    case "timer-mode": timerSetMode(target.getAttribute("data-key")); break;
+    case "timer-start": timerStart(); break;
+    case "timer-pause": timerPause(); break;
+    case "timer-reset": timerReset(); break;
+    case "timer-subject": {
+      state.timer.subject = state.timer.subject === target.getAttribute("data-key") ? "" : target.getAttribute("data-key");
+      render();
+      break;
+    }
+    case "search-result": {
+      const subject = target.getAttribute("data-subject");
+      const chapterNo = parseInt(target.getAttribute("data-chapter"),10);
+      state.view = "subject";
+      state.subject = subject;
+      state.uiOpen.add(chapterId(subject, chapterNo));
+      document.getElementById("searchResults").hidden = true;
+      document.getElementById("searchInput").value = "";
+      closeDrawer();
+      render();
+      setTimeout(function(){
+        const el = document.querySelector('[data-chid="'+chapterId(subject,chapterNo)+'"]');
+        if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      }, 60);
+      break;
+    }
+    case "export-data": {
+      const payload = {
+        exportedAt:new Date().toISOString(),
+        progress:state.progress, notes:state.notes, planner:state.planner,
+        quizHistory:state.quizHistory, meta:state.meta
+      };
+      const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "pixel-study-data.json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Data exported as a JSON file.");
+      break;
+    }
+    case "reset-data": {
+      if (confirm("This clears all progress, notes, planner tasks and quiz history from this app. Continue?")){
+        state.progress = {}; state.notes = {}; state.planner = []; state.quizHistory = [];
+        const theme = state.meta.theme;
+        state.meta = defaultMeta(); state.meta.theme = theme;
+        Promise.all([
+          storeSet("progress","{}"), storeSet("notes","{}"), storeSet("planner","[]"),
+          storeSet("quizHistory","[]"), storeSet("meta", JSON.stringify(state.meta))
+        ]).then(function(){ showToast("All data has been reset."); render(); });
+      }
+      break;
+    }
+  }
+});
+
+document.addEventListener("input", function(e){
+  if (e.target.matches('[data-role="notes"]')){
+    onNotesInput(e.target.getAttribute("data-id"), e.target.value);
+  } else if (e.target.id === "searchInput"){
+    runSearch(e.target.value);
+  } else if (e.target.id === "vaultSearch"){
+    state.vaultQuery = e.target.value;
+    render();
+    setTimeout(function(){
+      const el = document.getElementById("vaultSearch");
+      if (el){ el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+    },0);
+  }
+});
+
+document.addEventListener("submit", function(e){
+  if (e.target.id === "plannerForm"){
+    e.preventDefault();
+    const input = document.getElementById("plannerInput");
+    const select = document.getElementById("plannerSubject");
+    const text = input.value.trim();
+    if (!text) return;
+    state.planner.unshift({id:"t"+Date.now(), text:text, subject:select.value||null, done:false, createdAt:Date.now()});
+    storeSet("planner", JSON.stringify(state.planner));
+    input.value = "";
+    render();
+  }
+});
+
+document.addEventListener("keydown", function(e){
+  if (e.key === "Escape"){
+    closeDrawer();
+    const sr = document.getElementById("searchResults");
+    if (sr) sr.hidden = true;
+  }
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot(){
+  await loadState();
+  render();
+}
+boot();
+
+})();
+</script>
+</body>
+</html>
