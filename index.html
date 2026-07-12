@@ -292,7 +292,9 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 }
 [data-theme="slate"] .sheet-card::before{background:var(--margin-soft);}
 
+
 /* ---------- Dashboard ---------- */
+
 .dash-hero{
   display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:22px;
 }
@@ -591,9 +593,91 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 
 
 
+
+/* ---------- Onboarding & profile ---------- */
+.onboarding-overlay{position:fixed;inset:0;background:rgba(9,14,24,.62);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;z-index:120;}
+.onboarding-overlay.show{display:flex;animation:fadeIn .25s ease;}
+.onboarding-card{width:min(100%,520px);background:var(--paper-raised);border:1px solid var(--rule);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px;position:relative;overflow:hidden;}
+.onboarding-card::before{content:'';position:absolute;inset:0 auto 0 0;width:10px;background:linear-gradient(180deg,var(--margin),transparent 70%);opacity:.95;}
+.onboarding-card h2{font-size:1.8rem;margin-bottom:10px;}
+.onboarding-card p{color:var(--ink-soft);margin-bottom:18px;max-width:48ch;}
+.onboarding-form{display:grid;gap:14px;}
+.field{display:grid;gap:6px;}
+.field label{font-weight:600;font-size:.88rem;}
+.field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--rule-strong);background:var(--paper);}
+.field input:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px;}
+.onboarding-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:6px;flex-wrap:wrap;}
+.primary-btn{padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--paper-raised);font-weight:600;box-shadow:var(--shadow-sm);}
+.primary-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);}
+.helper-text{font-size:.78rem;color:var(--ink-faint);}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;}
+.profile-card{background:var(--paper-raised);border:1px solid var(--rule);border-radius:16px;padding:16px;box-shadow:var(--shadow-sm);}
+.profile-card .label{font-size:.72rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;font-family:'IBM Plex Mono',monospace;}
+.profile-card .value{margin-top:8px;font-size:1.1rem;font-weight:700;font-family:'IBM Plex Serif',serif;}
+.profile-meta{display:grid;gap:10px;margin-top:18px;}
+.profile-meta .row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule);}
+.profile-meta .row:last-child{border-bottom:none;}
+.profile-meta .row span:first-child{color:var(--ink-soft);} 
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+
+.profile-shell{display:grid;gap:18px;animation:fadeUp .25s ease;}
+.profile-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.8fr);gap:18px;}
+.profile-lead,.profile-summary,.profile-breakdown,.profile-activity{background:var(--paper-raised);border:1px solid var(--rule);border-radius:24px;box-shadow:var(--shadow-md);}
+.profile-lead{padding:24px;position:relative;overflow:hidden;}
+.profile-lead::after{content:'';position:absolute;inset:auto -60px -60px auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--accent-soft),transparent 68%);opacity:.8;pointer-events:none;}
+.profile-kicker{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+.profile-name{font-size:clamp(1.8rem,3vw,2.4rem);line-height:1.05;margin:0 0 8px;font-family:'IBM Plex Serif',serif;}
+.profile-sub{color:var(--ink-soft);max-width:52ch;margin-bottom:18px;}
+.profile-badges{display:flex;flex-wrap:wrap;gap:10px;}
+.profile-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--rule);border-radius:999px;background:var(--paper);color:var(--ink-soft);font-size:.82rem;}
+.profile-summary{padding:24px;display:grid;align-content:center;gap:12px;}
+.profile-ring{display:grid;place-items:center;position:relative;width:160px;margin:0 auto;}
+.profile-ring svg{width:160px;height:160px;transform:rotate(-90deg);}
+.profile-ring-track{fill:none;stroke:var(--rule-strong);stroke-width:10;}
+.profile-ring-fill{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .35s ease;}
+.profile-ring-center{position:absolute;display:grid;place-items:center;text-align:center;}
+.profile-ring-center b{font-size:2rem;font-family:'IBM Plex Serif',serif;line-height:1;}
+.profile-ring-center span{font-size:.78rem;color:var(--ink-soft);margin-top:4px;}
+.profile-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
+.profile-stat{padding:16px 18px;border-radius:18px;background:var(--paper-raised);border:1px solid var(--rule);box-shadow:var(--shadow-sm);}
+.profile-stat .label{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);}
+.profile-stat .value{display:block;margin-top:8px;font-weight:700;font-size:1.08rem;}
+.profile-breakdown,.profile-activity{padding:22px;}
+.profile-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.profile-section-head h3{font-size:1rem;}
+.profile-list{display:grid;gap:10px;}
+.profile-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule);}
+.profile-row:last-child{border-bottom:none;padding-bottom:0;}
+.profile-row span:first-child{color:var(--ink-soft);}
+.profile-mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.profile-mini-card{padding:14px;border-radius:16px;background:var(--paper);border:1px solid var(--rule);}
+.profile-mini-card strong{display:block;font-size:1rem;margin-top:8px;}
+@media (max-width: 920px){.profile-hero{grid-template-columns:1fr;}.profile-summary{order:-1;}}
+
 </style>
 </head>
 <body>
+<div class="onboarding-overlay" id="onboardingOverlay" aria-hidden="true">
+  <section class="onboarding-card" aria-labelledby="onboardingTitle">
+    <h2 id="onboardingTitle">Welcome to Pixel Study</h2>
+    <p>Create your local study account once on this device. Your name, date of birth, and study progress stay saved here even after refresh, restart, or reopening later.</p>
+    <form class="onboarding-form" id="onboardingForm">
+      <div class="field">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" type="text" autocomplete="name" required maxlength="80" placeholder="Enter your full name">
+      </div>
+      <div class="field">
+        <label for="dateOfBirth">Date of Birth</label>
+        <input id="dateOfBirth" name="dateOfBirth" type="date" required>
+      </div>
+      <div class="onboarding-actions">
+        <span class="helper-text">No email, password, OTP, or cloud account needed.</span>
+        <button type="submit" class="primary-btn">Create Account</button>
+      </div>
+    </form>
+  </section>
+</div>
 <div class="app-shell">
   <div class="drawer-overlay" id="drawerOverlay" data-action="nav-drawer-toggle"></div>
 
@@ -613,6 +697,10 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
         <button class="nav-item" data-action="nav" data-view="dashboard">
           <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="3" width="8" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="10" width="8" height="11" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
           Dashboard
+        </button>
+        <button class="nav-item" data-action="nav" data-view="profile">
+          <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.7"/><path d="M4 20a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Profile
         </button>
         <button class="nav-item" data-action="nav" data-view="progress">
           <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -1204,7 +1292,8 @@ function applyTheme(theme){
 const VIEW_TITLES = {
   dashboard:"Dashboard", progress:"My Progress",
   subject:"Subject", formulas:"Formula & Concept Vault",
-  quiz:"Practice Quiz", planner:"Study Planner", timer:"Focus Timer"
+  quiz:"Practice Quiz", planner:"Study Planner", timer:"Focus Timer",
+  profile:"Profile"
 };
 
 function setActiveNav(){
@@ -1231,6 +1320,7 @@ function render(){
     case "quiz": html = renderQuiz(); break;
     case "planner": html = renderPlanner(); break;
     case "timer": html = renderTimer(); break;
+    case "profile": html = renderProfileNative(); break;
     default: html = renderDashboard();
   }
   main.innerHTML = '<div class="view">' + html + '</div>';
@@ -1240,6 +1330,97 @@ function render(){
   if (state.view === "timer") updateTimerDOM();
   updateMiniTimer();
 }
+
+function renderProfileNative(){
+  const profile = loadLocalProfile();
+  const done = doneChapters(), total = totalChapters();
+  const pct = total ? Math.round((done/total)*100) : 0;
+  const circumference = 2*Math.PI*58;
+  const offset = circumference - (pct/100)*circumference;
+  const chaptersBySubject = subjectList().map(function(key){
+    const s = SUBJECTS[key];
+    const doneSub = subjectDoneCount(key), totalSub = s.chapters.length;
+    const subPct = totalSub ? Math.round((doneSub/totalSub)*100) : 0;
+    return '<div class="profile-mini-card"><span class="label">'+esc(s.label)+'</span><strong>'+doneSub+'/'+totalSub+' chapters</strong><small>'+subPct+'% complete</small></div>';
+  }).join('');
+  const testsAttempted = state.quizHistory.length;
+  const lastQuiz = state.quizHistory.length ? state.quizHistory[state.quizHistory.length-1] : null;
+  const lastStudiedChapter = inferLastStudiedChapter();
+  const lastStudyDate = state.meta.lastActiveDate || profile.lastStudyDate || '—';
+  return ''+
+  '<div class="profile-shell">'+
+    '<div class="section-head"><p class="eyebrow">Section G</p><h2>Your Pixel Study profile</h2></div>'+
+    '<div class="profile-hero">'+
+      '<section class="profile-lead">'+
+        '<div class="profile-kicker">Local device profile</div>'+
+        '<h1 class="profile-name">'+esc(profile.fullName || 'Student')+'</h1>'+
+        '<p class="profile-sub">Your profile is stored only on this device. Study stats update automatically whenever you complete chapters, attempt quizzes, or return for another session.</p>'+
+        '<div class="profile-badges">'+
+          '<span class="profile-badge">👤 '+esc(profile.fullName || 'Not set')+'</span>'+
+          '<span class="profile-badge">🎂 '+esc(formatProfileDate(profile.dateOfBirth))+'</span>'+
+          '<span class="profile-badge">📅 Joined '+esc(formatProfileDateTime(profile.accountCreatedAt))+'</span>'+
+        '</div>'+
+      '</section>'+
+      '<aside class="profile-summary">'+
+        '<div class="profile-ring"><svg viewBox="0 0 132 132"><circle class="profile-ring-track" cx="66" cy="66" r="58"></circle><circle class="profile-ring-fill" cx="66" cy="66" r="58" stroke-dasharray="'+circumference+'" stroke-dashoffset="'+offset+'"></circle></svg><div class="profile-ring-center"><b>'+pct+'%</b><span>Overall progress</span></div></div>'+
+        '<div class="profile-badges"><span class="profile-badge">🔥 '+(state.meta.streak||0)+' day streak</span><span class="profile-badge">⏱️ '+(state.meta.pomodorosTotal||0)+' focus sessions</span></div>'+
+      '</aside>'+
+    '</div>'+
+    '<div class="profile-stat-grid">'+
+      '<article class="profile-stat"><span class="label">Chapters completed</span><span class="value">'+done+' / '+total+'</span></article>'+
+      '<article class="profile-stat"><span class="label">Tests attempted</span><span class="value">'+testsAttempted+'</span></article>'+
+      '<article class="profile-stat"><span class="label">Last studied chapter</span><span class="value">'+esc(lastStudiedChapter)+'</span></article>'+
+      '<article class="profile-stat"><span class="label">Last study date</span><span class="value">'+esc(lastStudyDate)+'</span></article>'+
+    '</div>'+
+    '<div class="grid two">'+
+      '<section class="profile-breakdown">'+
+        '<div class="profile-section-head"><h3>Subject breakdown</h3><span class="eyebrow">Live progress</span></div>'+
+        '<div class="profile-mini-grid">'+chaptersBySubject+'</div>'+
+      '</section>'+
+      '<section class="profile-activity">'+
+        '<div class="profile-section-head"><h3>Study details</h3><span class="eyebrow">Auto-saved</span></div>'+
+        '<div class="profile-list">'+
+          profileRow('Date of Birth', formatProfileDate(profile.dateOfBirth))+
+          profileRow('Account creation date', formatProfileDateTime(profile.accountCreatedAt))+
+          profileRow('Overall study progress', pct + '%')+
+          profileRow('Current study streak', (state.meta.streak||0) + ' day' + ((state.meta.streak||0)===1?'':'s'))+
+          profileRow('Planner tasks', String(state.planner.length))+
+          profileRow('Latest quiz result', lastQuiz ? (lastQuiz.score + '/' + lastQuiz.total + ' · ' + lastQuiz.date) : 'No quiz attempted yet')+
+          profileRow('Theme', state.meta.theme === 'slate' ? 'Slate mode' : 'Paper mode')+
+        '</div>'+
+      '</section>'+
+    '</div>'+
+  '</div>';
+}
+function loadLocalProfile(){
+  try { return Object.assign({fullName:'',dateOfBirth:'',accountCreatedAt:''}, JSON.parse(localStorage.getItem('pixel-study-local-profile-v1') || '{}')); }
+  catch(e){ return {fullName:'',dateOfBirth:'',accountCreatedAt:''}; }
+}
+function formatProfileDate(value){
+  if(!value) return '—';
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{dateStyle:'medium'});
+}
+function formatProfileDateTime(value){
+  if(!value) return '—';
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? value : d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
+}
+function inferLastStudiedChapter(){
+  const doneEntries = Object.entries(state.progress).filter(function(entry){ return entry[1]==='done' || entry[1]==='in-progress'; });
+  if(!doneEntries.length) return 'No chapter opened yet';
+  const lastId = doneEntries[doneEntries.length-1][0];
+  const parts = lastId.split('-');
+  const subjectKey = parts[0];
+  const chapterNo = Number(parts[1]);
+  const subject = SUBJECTS[subjectKey];
+  const chapter = subject && subject.chapters.find(function(c){ return Number(c.no)===chapterNo; });
+  return chapter ? subject.label + ' — Chapter ' + chapter.no + ': ' + chapter.title : lastId;
+}
+function profileRow(label, value){
+  return '<div class="profile-row"><span>'+esc(label)+'</span><strong>'+esc(value)+'</strong></div>';
+}
+
 
 /* ---------- Dashboard ---------- */
 function renderDashboard(){
@@ -1943,5 +2124,263 @@ boot();
 
 })();
 </script>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'pixel-study-app-state-v1';
+  const PROFILE_KEY = 'pixel-study-local-profile-v1';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjealky';
+  const safeParse = (value, fallback) => { try { return value ? JSON.parse(value) : fallback; } catch(e){ return fallback; } };
+  const nowIso = () => new Date().toISOString();
+  const fmtDate = (value, withTime=false) => {
+    if(!value) return '—';
+    const d = new Date(value);
+    if(Number.isNaN(d.getTime())) return value;
+    return d.toLocaleString(undefined, withTime ? {dateStyle:'medium', timeStyle:'short'} : {dateStyle:'medium'});
+  };
+  const todayKey = () => new Date().toISOString().slice(0,10);
+
+  const profileDefaults = {
+    fullName:'',
+    dateOfBirth:'',
+    accountCreatedAt:'',
+    formspreeSubmitted:false,
+    formspreeAttempted:false,
+    deviceUserAgent:navigator.userAgent || '',
+    platform:navigator.platform || ''
+  };
+  const appDefaults = {
+    theme: document.documentElement.getAttribute('data-theme') || 'paper',
+    settings:{},
+    bookmarks:[],
+    completedChapters:[],
+    completedTopics:[],
+    formulaProgress:{},
+    conceptProgress:{},
+    revisionProgress:{},
+    testsAttempted:0,
+    lastOpenedChapter:'',
+    lastStudyDate:'',
+    lastVisitedView:'dashboard',
+    activityLog:[]
+  };
+
+  const profile = Object.assign({}, profileDefaults, safeParse(localStorage.getItem(PROFILE_KEY), {}));
+  const appState = Object.assign({}, appDefaults, safeParse(localStorage.getItem(STORAGE_KEY), {}));
+
+  const persistProfile = () => localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  const persistState = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+  const dedupe = arr => [...new Set((arr||[]).filter(Boolean))];
+  const trackActivity = (type, detail) => {
+    appState.lastStudyDate = nowIso();
+    appState.activityLog = Array.isArray(appState.activityLog) ? appState.activityLog : [];
+    appState.activityLog.push({type, detail, at: appState.lastStudyDate});
+    if(appState.activityLog.length > 180){ appState.activityLog = appState.activityLog.slice(-180); }
+    persistState();
+    renderProfile();
+  };
+  const streakFromLog = () => {
+    const dates = dedupe((appState.activityLog||[]).map(item => (item.at||'').slice(0,10))).sort().reverse();
+    if(!dates.length) return 0;
+    let streak = 0;
+    const cursor = new Date(); cursor.setHours(0,0,0,0);
+    for(let i=0;i<dates.length;i++){
+      const d = new Date(dates[i] + 'T00:00:00');
+      const diff = Math.round((cursor - d)/86400000);
+      if(diff === 0 || diff === 1 && streak===0 || diff === streak){ streak += 1; } else if(diff > streak){ break; }
+    }
+    return streak;
+  };
+
+  const onboardingOverlay = document.getElementById('onboardingOverlay');
+  const onboardingForm = document.getElementById('onboardingForm');
+  const profileStats = document.getElementById('profileStats');
+  const profileMeta = document.getElementById('profileMeta');
+
+  function submitFormspreeOnce(){
+    if(profile.formspreeSubmitted || !profile.fullName || !profile.dateOfBirth) return;
+    fetch(FORMSPREE_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        name: profile.fullName,
+        dateOfBirth: profile.dateOfBirth,
+        accountCreatedAt: profile.accountCreatedAt,
+        browserUserAgent: profile.deviceUserAgent,
+        platform: profile.platform,
+        source: 'Pixel Study local account creation'
+      })
+    }).then(res => {
+      if(res.ok){
+        profile.formspreeSubmitted = true;
+        persistProfile();
+      }
+    }).catch(() => {});
+  }
+
+  function ensureOnboarding(){
+    if(!onboardingOverlay) return;
+    const needsProfile = !(profile.fullName && profile.dateOfBirth && profile.accountCreatedAt);
+    onboardingOverlay.classList.toggle('show', needsProfile);
+    onboardingOverlay.setAttribute('aria-hidden', String(!needsProfile));
+    if(!needsProfile){ submitFormspreeOnce(); }
+  }
+
+  function renderProfile(){
+    if(!profileStats || !profileMeta) return;
+    const chapterCount = dedupe(appState.completedChapters).length;
+    const topicCount = dedupe(appState.completedTopics).length;
+    const bookmarkCount = dedupe(appState.bookmarks).length;
+    const formulaCount = Object.values(appState.formulaProgress || {}).filter(Boolean).length;
+    const conceptCount = Object.values(appState.conceptProgress || {}).filter(Boolean).length;
+    const revisionCount = Object.values(appState.revisionProgress || {}).filter(Boolean).length;
+    const stats = [
+      ['Name', profile.fullName || '—'],
+      ['Date of Birth', fmtDate(profile.dateOfBirth)],
+      ['Account Created', fmtDate(profile.accountCreatedAt, true)],
+      ['Study Progress', `${chapterCount} chapters · ${topicCount} topics`],
+      ['Chapters Completed', String(chapterCount)],
+      ['Tests Attempted', String(appState.testsAttempted || 0)],
+      ['Last Study Date', fmtDate(appState.lastStudyDate, true)],
+      ['Current Streak', `${streakFromLog()} day${streakFromLog()===1?'':'s'}`]
+    ];
+    profileStats.innerHTML = stats.map(([label,value]) => `<article class="profile-card"><div class="label">${label}</div><div class="value">${value}</div></article>`).join('');
+    profileMeta.innerHTML = [
+      ['Bookmarks', String(bookmarkCount)],
+      ['Formula Progress', String(formulaCount)],
+      ['Concept Progress', String(conceptCount)],
+      ['Revision Progress', String(revisionCount)],
+      ['Last Opened Chapter', appState.lastOpenedChapter || '—'],
+      ['Saved Theme', appState.theme || document.documentElement.getAttribute('data-theme') || 'paper']
+    ].map(([k,v]) => `<div class="row"><span>${k}</span><strong>${v}</strong></div>`).join('');
+  }
+
+  function inferAndPersist(){
+    appState.theme = document.documentElement.getAttribute('data-theme') || state.meta.theme || appState.theme;
+    appState.testsAttempted = Array.isArray(state.quizHistory) ? state.quizHistory.length : (appState.testsAttempted || 0);
+    appState.completedChapters = dedupe(Object.entries(state.progress||{}).filter(function(entry){ return entry[1]==='done'; }).map(function(entry){ return inferLastStudiedChapterFromId(entry[0]); }).concat(appState.completedChapters));
+    appState.completedTopics = dedupe(appState.completedTopics);
+    appState.bookmarks = dedupe(appState.bookmarks);
+
+    document.querySelectorAll('[aria-pressed="true"],[data-complete="true"],.is-complete,.completed,.done').forEach((el, i) => {
+      const label = el.getAttribute('data-chapter') || el.getAttribute('data-topic') || el.getAttribute('aria-label') || el.textContent.trim().slice(0,80);
+      if(!label) return;
+      const lowered = label.toLowerCase();
+      if(lowered.includes('chapter')) appState.completedChapters.push(label);
+      else appState.completedTopics.push(label);
+    });
+
+    document.querySelectorAll('[data-bookmarked="true"],.bookmarked,[aria-label*="bookmark" i].active').forEach(el => {
+      const label = el.getAttribute('data-bookmark-id') || el.getAttribute('aria-label') || el.textContent.trim().slice(0,80);
+      if(label) appState.bookmarks.push(label);
+    });
+
+    const activeViewBtn = document.querySelector('.nav-item.active,[data-view].active');
+    if(activeViewBtn && activeViewBtn.dataset.view) appState.lastVisitedView = activeViewBtn.dataset.view;
+    const activeChapter = document.querySelector('[data-chapter].active,.chapter-card.active,[aria-current="page"][data-chapter]');
+    if(activeChapter){ appState.lastOpenedChapter = activeChapter.getAttribute('data-chapter') || activeChapter.textContent.trim().slice(0,80); }
+    if(!appState.lastOpenedChapter){
+      const recent = Object.keys(state.progress||{}).filter(function(k){ return state.progress[k]==='done' || state.progress[k]==='in-progress'; }).pop();
+      if(recent) appState.lastOpenedChapter = inferLastStudiedChapterFromId(recent);
+    }
+
+    persistState();
+    renderProfile();
+  }
+
+
+  function inferLastStudiedChapterFromId(id){
+    if(!id) return '';
+    const parts = String(id).split('-');
+    const subjectKey = parts[0];
+    const chapterNo = Number(parts[1]);
+    if(window.SUBJECTS && SUBJECTS[subjectKey]){
+      const chapter = SUBJECTS[subjectKey].chapters.find(function(c){ return Number(c.no)===chapterNo; });
+      if(chapter) return SUBJECTS[subjectKey].label + ' — Chapter ' + chapter.no + ': ' + chapter.title;
+    }
+    return String(id);
+  }
+
+  function attachObservers(){
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('button,a,[data-view],[data-theme-toggle],[data-chapter],[data-topic]');
+      if(!target) return;
+      if(target.dataset.view){ appState.lastVisitedView = target.dataset.view; persistState(); renderProfile(); }
+      if(target.matches('[data-chapter], .chapter-card')){
+        const label = target.getAttribute('data-chapter') || target.textContent.trim().slice(0,80);
+        if(label){ appState.lastOpenedChapter = label; trackActivity('chapter-open', label); }
+      }
+      if(target.matches('[data-topic]')){
+        const label = target.getAttribute('data-topic') || target.textContent.trim().slice(0,80);
+        if(label){ appState.completedTopics = dedupe([...appState.completedTopics, label]); trackActivity('topic-open', label); }
+      }
+      setTimeout(inferAndPersist, 40);
+    }, true);
+
+    document.addEventListener('change', (e) => {
+      const t = e.target;
+      if(t.matches('input,select,textarea')){
+        appState.settings[t.id || t.name || 'field'] = t.type === 'checkbox' ? t.checked : t.value;
+        trackActivity('field-change', t.id || t.name || 'field');
+      }
+      setTimeout(inferAndPersist, 20);
+    }, true);
+
+    const mo = new MutationObserver(() => inferAndPersist());
+    mo.observe(document.body, {subtree:true, childList:true, attributes:true, attributeFilter:['class','data-theme','data-complete','aria-pressed','hidden']});
+
+    window.addEventListener('beforeunload', inferAndPersist);
+  }
+
+  function restoreTheme(){
+    if(appState.theme){ document.documentElement.setAttribute('data-theme', appState.theme); }
+    const themeBtn = document.querySelector('.theme-toggle,[data-theme-toggle]');
+    if(themeBtn){
+      themeBtn.addEventListener('click', () => {
+        setTimeout(() => {
+          appState.theme = document.documentElement.getAttribute('data-theme') || appState.theme;
+          persistState();
+          renderProfile();
+        }, 0);
+      }, true);
+    }
+  }
+
+  function restoreInputs(){
+    Object.entries(appState.settings || {}).forEach(([key, value]) => {
+      const el = document.getElementById(key) || document.querySelector(`[name="${CSS.escape(key)}"]`);
+      if(!el) return;
+      if(el.type === 'checkbox') el.checked = !!value;
+      else if((el.value || '') === '') el.value = value;
+    });
+  }
+
+  function restoreView(){
+    if(!appState.lastVisitedView) return;
+    const btn = document.querySelector(`[data-action="nav"][data-view="${appState.lastVisitedView}"]`);
+    if(btn) btn.click();
+  }
+
+  onboardingForm && onboardingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(onboardingForm);
+    profile.fullName = String(fd.get('fullName') || '').trim();
+    profile.dateOfBirth = String(fd.get('dateOfBirth') || '').trim();
+    profile.accountCreatedAt = profile.accountCreatedAt || nowIso();
+    persistProfile();
+    ensureOnboarding();
+    submitFormspreeOnce();
+    trackActivity('account-created', profile.fullName);
+  });
+
+  restoreTheme();
+  restoreInputs();
+  renderProfile();
+  ensureOnboarding();
+  attachObservers();
+  setTimeout(() => { inferAndPersist(); restoreView(); }, 80);
+})();
+</script>
+
 </body>
 </html>
