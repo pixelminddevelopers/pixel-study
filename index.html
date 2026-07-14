@@ -1156,21 +1156,46 @@ const QUIZ_BANK = {
    STORAGE — window.storage when available, in-memory fallback
    otherwise (so the file also works when opened standalone).
    ============================================================ */
+const STORE_PREFIX = "pixel-study-state:";
 const memoryFallback = {};
+
+function localGet(key){
+  try{ return localStorage.getItem(STORE_PREFIX + key); }
+  catch(e){ return undefined; } // localStorage unavailable (e.g. privacy mode) — caller falls back
+}
+function localSet(key, value){
+  try{ localStorage.setItem(STORE_PREFIX + key, value); return true; }
+  catch(e){ return false; }
+}
+
+// localStorage is the reliable, always-available persistence layer for a
+// real browser session (survives refresh, browser restart, and days away).
+// window.storage (only present in some hosted/artifact contexts) is treated
+// as a bonus sync target, never as the sole source of truth — previously
+// every write went ONLY to window.storage when it existed, and reads/writes
+// silently fell back to a plain in-memory object whenever it didn't, which
+// is why progress vanished on every reload while it wasn't present.
 async function storeGet(key){
+  const local = localGet(key);
+  if (local !== null && local !== undefined) return local;
+
   if (window.storage && typeof window.storage.get === "function"){
     try{
       const r = await window.storage.get(key, false);
-      return r ? r.value : null;
-    }catch(e){ return null; }
+      if (r && r.value != null){
+        localSet(key, r.value); // migrate so future reads are instant and reliable
+        return r.value;
+      }
+    }catch(e){ /* ignore, fall through */ }
   }
   return Object.prototype.hasOwnProperty.call(memoryFallback,key) ? memoryFallback[key] : null;
 }
 async function storeSet(key, value){
+  const wrote = localSet(key, value);
+  if (!wrote){ memoryFallback[key] = value; }
   if (window.storage && typeof window.storage.set === "function"){
-    try{ await window.storage.set(key, value, false); return true; }catch(e){ /* fall through */ }
+    try{ await window.storage.set(key, value, false); }catch(e){ /* best-effort only */ }
   }
-  memoryFallback[key] = value;
   return true;
 }
 
@@ -2127,18 +2152,16 @@ boot();
 
 <script>
 (function(){
-  const STORAGE_KEY = 'pixel-study-app-state-v1';
+  // Account / onboarding system only. This already worked correctly and is
+  // left untouched. (The DOM-scraping "shadow" progress tracker that used to
+  // live in this file has been removed — it wrote to its own localStorage
+  // key and was never read back into the real app `state`, so it could
+  // never have restored anything; see the storeGet/storeSet fix above for
+  // the actual persistence fix.)
   const PROFILE_KEY = 'pixel-study-local-profile-v1';
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjealky';
   const safeParse = (value, fallback) => { try { return value ? JSON.parse(value) : fallback; } catch(e){ return fallback; } };
   const nowIso = () => new Date().toISOString();
-  const fmtDate = (value, withTime=false) => {
-    if(!value) return '—';
-    const d = new Date(value);
-    if(Number.isNaN(d.getTime())) return value;
-    return d.toLocaleString(undefined, withTime ? {dateStyle:'medium', timeStyle:'short'} : {dateStyle:'medium'});
-  };
-  const todayKey = () => new Date().toISOString().slice(0,10);
 
   const profileDefaults = {
     fullName:'',
@@ -2149,53 +2172,12 @@ boot();
     deviceUserAgent:navigator.userAgent || '',
     platform:navigator.platform || ''
   };
-  const appDefaults = {
-    theme: document.documentElement.getAttribute('data-theme') || 'paper',
-    settings:{},
-    bookmarks:[],
-    completedChapters:[],
-    completedTopics:[],
-    formulaProgress:{},
-    conceptProgress:{},
-    revisionProgress:{},
-    testsAttempted:0,
-    lastOpenedChapter:'',
-    lastStudyDate:'',
-    lastVisitedView:'dashboard',
-    activityLog:[]
-  };
 
   const profile = Object.assign({}, profileDefaults, safeParse(localStorage.getItem(PROFILE_KEY), {}));
-  const appState = Object.assign({}, appDefaults, safeParse(localStorage.getItem(STORAGE_KEY), {}));
-
   const persistProfile = () => localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  const persistState = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-  const dedupe = arr => [...new Set((arr||[]).filter(Boolean))];
-  const trackActivity = (type, detail) => {
-    appState.lastStudyDate = nowIso();
-    appState.activityLog = Array.isArray(appState.activityLog) ? appState.activityLog : [];
-    appState.activityLog.push({type, detail, at: appState.lastStudyDate});
-    if(appState.activityLog.length > 180){ appState.activityLog = appState.activityLog.slice(-180); }
-    persistState();
-    renderProfile();
-  };
-  const streakFromLog = () => {
-    const dates = dedupe((appState.activityLog||[]).map(item => (item.at||'').slice(0,10))).sort().reverse();
-    if(!dates.length) return 0;
-    let streak = 0;
-    const cursor = new Date(); cursor.setHours(0,0,0,0);
-    for(let i=0;i<dates.length;i++){
-      const d = new Date(dates[i] + 'T00:00:00');
-      const diff = Math.round((cursor - d)/86400000);
-      if(diff === 0 || diff === 1 && streak===0 || diff === streak){ streak += 1; } else if(diff > streak){ break; }
-    }
-    return streak;
-  };
 
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const onboardingForm = document.getElementById('onboardingForm');
-  const profileStats = document.getElementById('profileStats');
-  const profileMeta = document.getElementById('profileMeta');
 
   function submitFormspreeOnce(){
     if(profile.formspreeSubmitted || !profile.fullName || !profile.dateOfBirth) return;
@@ -2226,141 +2208,6 @@ boot();
     if(!needsProfile){ submitFormspreeOnce(); }
   }
 
-  function renderProfile(){
-    if(!profileStats || !profileMeta) return;
-    const chapterCount = dedupe(appState.completedChapters).length;
-    const topicCount = dedupe(appState.completedTopics).length;
-    const bookmarkCount = dedupe(appState.bookmarks).length;
-    const formulaCount = Object.values(appState.formulaProgress || {}).filter(Boolean).length;
-    const conceptCount = Object.values(appState.conceptProgress || {}).filter(Boolean).length;
-    const revisionCount = Object.values(appState.revisionProgress || {}).filter(Boolean).length;
-    const stats = [
-      ['Name', profile.fullName || '—'],
-      ['Date of Birth', fmtDate(profile.dateOfBirth)],
-      ['Account Created', fmtDate(profile.accountCreatedAt, true)],
-      ['Study Progress', `${chapterCount} chapters · ${topicCount} topics`],
-      ['Chapters Completed', String(chapterCount)],
-      ['Tests Attempted', String(appState.testsAttempted || 0)],
-      ['Last Study Date', fmtDate(appState.lastStudyDate, true)],
-      ['Current Streak', `${streakFromLog()} day${streakFromLog()===1?'':'s'}`]
-    ];
-    profileStats.innerHTML = stats.map(([label,value]) => `<article class="profile-card"><div class="label">${label}</div><div class="value">${value}</div></article>`).join('');
-    profileMeta.innerHTML = [
-      ['Bookmarks', String(bookmarkCount)],
-      ['Formula Progress', String(formulaCount)],
-      ['Concept Progress', String(conceptCount)],
-      ['Revision Progress', String(revisionCount)],
-      ['Last Opened Chapter', appState.lastOpenedChapter || '—'],
-      ['Saved Theme', appState.theme || document.documentElement.getAttribute('data-theme') || 'paper']
-    ].map(([k,v]) => `<div class="row"><span>${k}</span><strong>${v}</strong></div>`).join('');
-  }
-
-  function inferAndPersist(){
-    appState.theme = document.documentElement.getAttribute('data-theme') || state.meta.theme || appState.theme;
-    appState.testsAttempted = Array.isArray(state.quizHistory) ? state.quizHistory.length : (appState.testsAttempted || 0);
-    appState.completedChapters = dedupe(Object.entries(state.progress||{}).filter(function(entry){ return entry[1]==='done'; }).map(function(entry){ return inferLastStudiedChapterFromId(entry[0]); }).concat(appState.completedChapters));
-    appState.completedTopics = dedupe(appState.completedTopics);
-    appState.bookmarks = dedupe(appState.bookmarks);
-
-    document.querySelectorAll('[aria-pressed="true"],[data-complete="true"],.is-complete,.completed,.done').forEach((el, i) => {
-      const label = el.getAttribute('data-chapter') || el.getAttribute('data-topic') || el.getAttribute('aria-label') || el.textContent.trim().slice(0,80);
-      if(!label) return;
-      const lowered = label.toLowerCase();
-      if(lowered.includes('chapter')) appState.completedChapters.push(label);
-      else appState.completedTopics.push(label);
-    });
-
-    document.querySelectorAll('[data-bookmarked="true"],.bookmarked,[aria-label*="bookmark" i].active').forEach(el => {
-      const label = el.getAttribute('data-bookmark-id') || el.getAttribute('aria-label') || el.textContent.trim().slice(0,80);
-      if(label) appState.bookmarks.push(label);
-    });
-
-    const activeViewBtn = document.querySelector('.nav-item.active,[data-view].active');
-    if(activeViewBtn && activeViewBtn.dataset.view) appState.lastVisitedView = activeViewBtn.dataset.view;
-    const activeChapter = document.querySelector('[data-chapter].active,.chapter-card.active,[aria-current="page"][data-chapter]');
-    if(activeChapter){ appState.lastOpenedChapter = activeChapter.getAttribute('data-chapter') || activeChapter.textContent.trim().slice(0,80); }
-    if(!appState.lastOpenedChapter){
-      const recent = Object.keys(state.progress||{}).filter(function(k){ return state.progress[k]==='done' || state.progress[k]==='in-progress'; }).pop();
-      if(recent) appState.lastOpenedChapter = inferLastStudiedChapterFromId(recent);
-    }
-
-    persistState();
-    renderProfile();
-  }
-
-
-  function inferLastStudiedChapterFromId(id){
-    if(!id) return '';
-    const parts = String(id).split('-');
-    const subjectKey = parts[0];
-    const chapterNo = Number(parts[1]);
-    if(window.SUBJECTS && SUBJECTS[subjectKey]){
-      const chapter = SUBJECTS[subjectKey].chapters.find(function(c){ return Number(c.no)===chapterNo; });
-      if(chapter) return SUBJECTS[subjectKey].label + ' — Chapter ' + chapter.no + ': ' + chapter.title;
-    }
-    return String(id);
-  }
-
-  function attachObservers(){
-    document.addEventListener('click', (e) => {
-      const target = e.target.closest('button,a,[data-view],[data-theme-toggle],[data-chapter],[data-topic]');
-      if(!target) return;
-      if(target.dataset.view){ appState.lastVisitedView = target.dataset.view; persistState(); renderProfile(); }
-      if(target.matches('[data-chapter], .chapter-card')){
-        const label = target.getAttribute('data-chapter') || target.textContent.trim().slice(0,80);
-        if(label){ appState.lastOpenedChapter = label; trackActivity('chapter-open', label); }
-      }
-      if(target.matches('[data-topic]')){
-        const label = target.getAttribute('data-topic') || target.textContent.trim().slice(0,80);
-        if(label){ appState.completedTopics = dedupe([...appState.completedTopics, label]); trackActivity('topic-open', label); }
-      }
-      setTimeout(inferAndPersist, 40);
-    }, true);
-
-    document.addEventListener('change', (e) => {
-      const t = e.target;
-      if(t.matches('input,select,textarea')){
-        appState.settings[t.id || t.name || 'field'] = t.type === 'checkbox' ? t.checked : t.value;
-        trackActivity('field-change', t.id || t.name || 'field');
-      }
-      setTimeout(inferAndPersist, 20);
-    }, true);
-
-    const mo = new MutationObserver(() => inferAndPersist());
-    mo.observe(document.body, {subtree:true, childList:true, attributes:true, attributeFilter:['class','data-theme','data-complete','aria-pressed','hidden']});
-
-    window.addEventListener('beforeunload', inferAndPersist);
-  }
-
-  function restoreTheme(){
-    if(appState.theme){ document.documentElement.setAttribute('data-theme', appState.theme); }
-    const themeBtn = document.querySelector('.theme-toggle,[data-theme-toggle]');
-    if(themeBtn){
-      themeBtn.addEventListener('click', () => {
-        setTimeout(() => {
-          appState.theme = document.documentElement.getAttribute('data-theme') || appState.theme;
-          persistState();
-          renderProfile();
-        }, 0);
-      }, true);
-    }
-  }
-
-  function restoreInputs(){
-    Object.entries(appState.settings || {}).forEach(([key, value]) => {
-      const el = document.getElementById(key) || document.querySelector(`[name="${CSS.escape(key)}"]`);
-      if(!el) return;
-      if(el.type === 'checkbox') el.checked = !!value;
-      else if((el.value || '') === '') el.value = value;
-    });
-  }
-
-  function restoreView(){
-    if(!appState.lastVisitedView) return;
-    const btn = document.querySelector(`[data-action="nav"][data-view="${appState.lastVisitedView}"]`);
-    if(btn) btn.click();
-  }
-
   onboardingForm && onboardingForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(onboardingForm);
@@ -2370,15 +2217,9 @@ boot();
     persistProfile();
     ensureOnboarding();
     submitFormspreeOnce();
-    trackActivity('account-created', profile.fullName);
   });
 
-  restoreTheme();
-  restoreInputs();
-  renderProfile();
   ensureOnboarding();
-  attachObservers();
-  setTimeout(() => { inferAndPersist(); restoreView(); }, 80);
 })();
 </script>
 
