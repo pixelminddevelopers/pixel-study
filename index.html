@@ -433,6 +433,117 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 .saved-flag{font-size:.7rem;color:var(--accent);opacity:0;transition:opacity .3s ease;font-weight:600;}
 .saved-flag.visible{opacity:1;}
 
+.chapter-open-lesson{
+  margin:0 18px 16px 52px;display:inline-flex;align-items:center;gap:7px;
+  font-size:.8rem;font-weight:600;color:var(--focus);
+}
+.chapter-open-lesson svg{width:15px;height:15px;}
+.chapter-open-lesson:hover{text-decoration:underline;}
+
+/* ---------- Chapter Detail / Full Lesson page ---------- */
+/* The .sheet-card base style includes a vertical red margin-rule accent
+   (see .sheet-card::before above) designed for the chapter-list cards.
+   On the lesson detail page that same line repeats down every section and
+   reads as visual noise, so it's turned off here -- scoped to .lesson-page
+   only. The chapter-list page's accent line is untouched. */
+.lesson-page .sheet-card::before{content:none;}
+
+.lesson-page{max-width:760px;}
+.lesson-back{margin-bottom:18px;}
+.lesson-hero{
+  padding:22px clamp(18px,3vw,30px);margin-bottom:18px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.lesson-hero-text .chapter-no{display:block;margin-bottom:4px;}
+.lesson-hero-text h2{font-size:clamp(1.3rem,1.05rem + 1vw,1.7rem);font-weight:600;}
+.lesson-hero-text p{color:var(--ink-soft);font-size:.88rem;margin-top:8px;max-width:56ch;}
+.lesson-hero .status-group{flex:0 0 auto;}
+
+.lesson-section{padding:20px clamp(18px,3vw,30px) 22px;margin-bottom:16px;}
+.lesson-section:last-of-type{margin-bottom:0;}
+.lesson-h3{
+  font-family:'IBM Plex Serif',Georgia,serif;font-weight:600;font-size:1.05rem;
+  margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--rule);
+}
+.lesson-list{display:flex;flex-direction:column;gap:9px;}
+.lesson-list li{
+  font-size:.88rem;line-height:1.55;padding-left:20px;position:relative;color:var(--ink);
+}
+.lesson-list li::before{
+  content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+}
+.lesson-concept{padding:12px 0;border-bottom:1px dashed var(--rule);}
+.lesson-concept:last-child{border-bottom:none;padding-bottom:0;}
+.lesson-concept:first-child{padding-top:0;}
+.lesson-concept h4{font-size:.88rem;font-weight:600;margin-bottom:5px;color:var(--ink);}
+.lesson-concept p{font-size:.85rem;line-height:1.6;color:var(--ink-soft);}
+
+.lesson-def{padding:10px 0;border-bottom:1px dashed var(--rule);font-size:.85rem;line-height:1.6;}
+.lesson-def:last-child{border-bottom:none;padding-bottom:0;}
+.lesson-def:first-child{padding-top:0;}
+.lesson-def b{color:var(--ink);font-weight:600;}
+.lesson-def span{color:var(--ink-soft);}
+
+.lesson-formula-card{
+  background:var(--paper);border:1px solid var(--rule);border-radius:12px;
+  padding:14px 16px;margin-bottom:12px;
+}
+.lesson-formula-card:last-child{margin-bottom:0;}
+.lesson-formula-name{font-size:.8rem;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.lesson-formula-expr{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1rem;color:var(--focus);
+  background:var(--paper-raised);border-radius:8px;padding:9px 12px;margin-bottom:10px;
+  overflow-x:auto;white-space:nowrap;
+}
+.lesson-formula-row{font-size:.8rem;line-height:1.55;color:var(--ink-soft);margin-top:5px;}
+.lesson-formula-row b{color:var(--ink);font-weight:600;}
+.lesson-formula-row.mistake{color:var(--margin);}
+[data-theme="slate"] .lesson-formula-row.mistake{color:#F3A79A;}
+.lesson-formula-row.mistake b{color:inherit;}
+
+.lesson-table-wrap{overflow-x:auto;margin-bottom:4px;}
+.lesson-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.lesson-table caption{text-align:left;font-weight:600;font-size:.88rem;margin-bottom:10px;color:var(--ink);}
+.lesson-table th,.lesson-table td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;}
+.lesson-table th{
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-faint);
+  font-weight:600;border-bottom:2px solid var(--rule-strong);
+}
+.lesson-table tr:last-child td{border-bottom:none;}
+
+.lesson-diagram{margin-bottom:20px;}
+.lesson-diagram:last-child{margin-bottom:0;}
+.lesson-diagram img{
+  width:100%;height:auto;border-radius:10px;border:1px solid var(--rule);
+  background:#fff;display:block;
+}
+.lesson-diagram-cap{margin-top:9px;font-size:.82rem;line-height:1.5;}
+.lesson-diagram-cap b{color:var(--ink);font-weight:600;display:block;margin-bottom:3px;}
+.lesson-diagram-cap span{color:var(--ink-faint);font-size:.78rem;}
+
+.lesson-tips{background:var(--gold-soft);}
+.lesson-tips .lesson-h3{border-bottom-color:rgba(184,121,26,.25);color:var(--gold);}
+.lesson-tips .lesson-list li::before{background:var(--gold);}
+
+.lesson-summary{background:var(--accent-soft);}
+.lesson-summary .lesson-h3{border-bottom-color:rgba(47,125,93,.25);color:var(--accent);}
+.lesson-summary .lesson-list{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px;}
+
+.lesson-empty{padding:40px 26px;text-align:center;color:var(--ink-soft);}
+.lesson-empty h3{font-family:'IBM Plex Serif',Georgia,serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;}
+.lesson-empty p{font-size:.88rem;max-width:44ch;margin:0 auto;}
+
+.lesson-footer{display:flex;justify-content:center;margin-top:22px;}
+
+@media (max-width:520px){
+  .lesson-section{padding:16px 16px 18px;}
+  .lesson-hero{padding:18px 16px;}
+  .chapter-open-lesson{margin-left:40px;}
+  .lesson-summary .lesson-list{grid-template-columns:1fr;}
+  .lesson-formula-expr{white-space:normal;}
+}
+
 /* ---------- Formula vault ---------- */
 .vault-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
 .filter-chip{padding:7px 14px;border-radius:20px;border:1px solid var(--rule-strong);font-size:.8rem;font-weight:600;color:var(--ink-soft);}
@@ -780,6 +891,11 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="owner-name">Developed by <strong>Sayyed Mohammad Umair Jamadar — Co-Founder PixelMind Developers</strong></div>
+
+<!-- Chapter-lesson content, loaded as separate data files (one per subject) so the
+     main app file stays untouched in structure. Safe to load even before all
+     subjects are ready -- renderChapterLesson() falls back gracefully. -->
+<script src="data/sci1-lessons.js"></script>
 
 <script>
 (function(){
@@ -1205,6 +1321,7 @@ async function storeSet(key, value){
 const state = {
   view:"dashboard",
   subject:null,
+  lessonChapter:null,
   progress:{},      // chapterId -> "not-started" | "in-progress" | "done"
   notes:{},         // chapterId -> string
   planner:[],        // [{id,text,subject,done,createdAt}]
@@ -1318,7 +1435,7 @@ const VIEW_TITLES = {
   dashboard:"Dashboard", progress:"My Progress",
   subject:"Subject", formulas:"Formula & Concept Vault",
   quiz:"Practice Quiz", planner:"Study Planner", timer:"Focus Timer",
-  profile:"Profile"
+  profile:"Profile", lesson:"Full Lesson"
 };
 
 function setActiveNav(){
@@ -1340,6 +1457,10 @@ function render(){
     case "subject":
       html = renderSubject(state.subject);
       title = SUBJECTS[state.subject].label;
+      break;
+    case "lesson":
+      html = renderChapterLesson(state.subject, state.lessonChapter);
+      title = "Full Lesson";
       break;
     case "formulas": html = renderVault(); break;
     case "quiz": html = renderQuiz(); break;
@@ -1543,6 +1664,7 @@ function renderSubject(key){
         '</span>'+
         '<svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</div>'+
+      '<button class="chapter-open-lesson" data-action="open-lesson" data-subject="'+key+'" data-chno="'+c.no+'">Open full revision lesson <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
       '<div class="chapter-body">'+
         '<h4>'+label+'</h4>'+itemsHtml+
         '<h4>Important Questions</h4>'+qsHtml+
@@ -1567,6 +1689,120 @@ function renderSubject(key){
 
 function statusBtn(id, current, val, glyph, label){
   return '<button class="status-btn'+(current===val?" active":"")+'" data-status="'+val+'" data-action="set-status" data-id="'+id+'" aria-label="'+label+'" title="'+label+'" data-stop="1">'+glyph+'</button>';
+}
+
+/* ---------- Chapter Detail / Full Lesson page ----------
+   Additive feature: pulls structured revision content from separate,
+   per-subject data files (e.g. data/sci1-lessons.js -> window.SCI1_LESSONS).
+   A subject with no data file yet simply shows a friendly placeholder,
+   so this is safe to ship incrementally, subject by subject. */
+const LESSON_SOURCES = {
+  sci1:"SCI1_LESSONS"
+  /* sci2:"SCI2_LESSONS", math1:"MATH1_LESSONS", math2:"MATH2_LESSONS" -- added as those files ship */
+};
+
+function getLessonData(subjectKey, no){
+  const varName = LESSON_SOURCES[subjectKey];
+  const bank = varName ? window[varName] : null;
+  return (bank && bank[no]) ? bank[no] : null;
+}
+
+function lessonBackBtn(subjectKey){
+  const label = SUBJECTS[subjectKey] ? SUBJECTS[subjectKey].label : "Subject";
+  return '<button class="btn btn-ghost btn-sm lesson-back" data-action="nav" data-view="subject" data-subject="'+subjectKey+'">'+
+    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    ' Back to '+esc(label)+'</button>';
+}
+
+function renderChapterLesson(subjectKey, no){
+  const s = SUBJECTS[subjectKey];
+  if (!s) return lessonBackBtnFallback();
+  const chapterMeta = s.chapters.find(function(c){ return c.no === no; });
+  const lesson = getLessonData(subjectKey, no);
+  const id = chapterId(subjectKey, no);
+  const status = state.progress[id] || "not-started";
+
+  if (!lesson){
+    return '<div class="lesson-page">'+
+      lessonBackBtn(subjectKey)+
+      '<div class="sheet-card lesson-empty">'+
+        '<h3>Full lesson coming soon</h3>'+
+        '<p>The detailed revision page for '+(chapterMeta?('"'+esc(chapterMeta.title)+'"'):"this chapter")+' is being prepared and will be added here. In the meantime, use the Key Concepts and Important Questions on the chapter card.</p>'+
+      '</div>'+
+    '</div>';
+  }
+
+  const objectivesHtml = (lesson.objectives||[]).map(function(o){ return '<li>'+esc(o)+'</li>'; }).join("");
+  const conceptsHtml = (lesson.concepts||[]).map(function(c){
+    return '<div class="lesson-concept"><h4>'+esc(c.heading)+'</h4><p>'+esc(c.text)+'</p></div>';
+  }).join("");
+  const defsHtml = (lesson.definitions||[]).map(function(d){
+    return '<div class="lesson-def"><b>'+esc(d.term)+'.</b> <span>'+esc(d.def)+'</span></div>';
+  }).join("");
+  const formulasHtml = (lesson.formulas||[]).map(function(f){
+    return '<div class="lesson-formula-card">'+
+      '<div class="lesson-formula-name">'+esc(f.name)+'</div>'+
+      '<div class="lesson-formula-expr">'+esc(f.formula)+'</div>'+
+      (f.symbols?'<div class="lesson-formula-row"><b>Symbols: </b>'+esc(f.symbols)+'</div>':'')+
+      (f.units?'<div class="lesson-formula-row"><b>Units: </b>'+esc(f.units)+'</div>':'')+
+      (f.notes?'<div class="lesson-formula-row"><b>Note: </b>'+esc(f.notes)+'</div>':'')+
+      (f.mistakes?'<div class="lesson-formula-row mistake"><b>Common mistake: </b>'+esc(f.mistakes)+'</div>':'')+
+    '</div>';
+  }).join("");
+  const tablesHtml = (lesson.tables||[]).map(function(t){
+    const headHtml = t.headers.map(function(h){ return '<th>'+esc(h)+'</th>'; }).join("");
+    const rowsHtml = t.rows.map(function(r){
+      return '<tr>'+r.map(function(cell){ return '<td>'+esc(cell)+'</td>'; }).join("")+'</tr>';
+    }).join("");
+    return '<div class="lesson-table-wrap"><table class="lesson-table">'+
+      (t.title?('<caption>'+esc(t.title)+'</caption>'):'')+
+      '<thead><tr>'+headHtml+'</tr></thead><tbody>'+rowsHtml+'</tbody>'+
+    '</table></div>';
+  }).join("");
+  const diagramsHtml = (lesson.diagrams||[]).map(function(d){
+    return '<div class="lesson-diagram">'+
+      '<img src="assets/diagrams/'+esc(d.src)+'" alt="'+esc(d.caption)+'" loading="lazy">'+
+      '<div class="lesson-diagram-cap"><b>'+esc(d.caption)+'</b>'+(d.note?('<span>'+esc(d.note)+'</span>'):'')+'</div>'+
+    '</div>';
+  }).join("");
+  const pointsHtml = (lesson.importantPoints||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
+  const tipsHtml = (lesson.boardTips||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
+  const summaryHtml = (lesson.revisionSummary||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
+
+  function section(heading, inner, extraClass){
+    if (!inner) return "";
+    return '<section class="sheet-card lesson-section'+(extraClass?(" "+extraClass):"")+'"><h3 class="lesson-h3">'+esc(heading)+'</h3>'+inner+'</section>';
+  }
+
+  return '<div class="lesson-page">'+
+    lessonBackBtn(subjectKey)+
+    '<div class="sheet-card lesson-hero">'+
+      '<div class="lesson-hero-text">'+
+        '<span class="chapter-no">Ch. '+no+' &middot; '+esc(s.label)+'</span>'+
+        '<h2>'+esc(lesson.title||(chapterMeta?chapterMeta.title:""))+'</h2>'+
+        (lesson.intro?('<p>'+esc(lesson.intro)+'</p>'):'')+
+      '</div>'+
+      '<span class="status-group">'+
+        statusBtn(id,status,"not-started","\u2014","Not started")+
+        statusBtn(id,status,"in-progress","\u25D0","In progress")+
+        statusBtn(id,status,"done","\u2713","Done")+
+      '</span>'+
+    '</div>'+
+    section("Learning Objectives", objectivesHtml?('<ul class="lesson-list">'+objectivesHtml+'</ul>'):"")+
+    section("Important Concepts", conceptsHtml)+
+    section("Important Definitions", defsHtml)+
+    section("Formulas", formulasHtml)+
+    section("Important Tables", tablesHtml)+
+    section("Important Diagrams", diagramsHtml)+
+    section("Important Points to Remember", pointsHtml?('<ul class="lesson-list">'+pointsHtml+'</ul>'):"")+
+    section("Board Exam Tips", tipsHtml?('<ul class="lesson-list">'+tipsHtml+'</ul>'):"", "lesson-tips")+
+    section("Quick Revision Summary", summaryHtml?('<ul class="lesson-list">'+summaryHtml+'</ul>'):"", "lesson-summary")+
+    '<div class="lesson-footer">'+lessonBackBtn(subjectKey)+'</div>'+
+  '</div>';
+}
+
+function lessonBackBtnFallback(){
+  return '<div class="lesson-page"><button class="btn btn-ghost btn-sm lesson-back" data-action="nav" data-view="dashboard">&larr; Back to Dashboard</button></div>';
 }
 
 /* ---------- Formula / Concept Vault ---------- */
@@ -1958,6 +2194,16 @@ document.addEventListener("click", function(e){
       state.meta.theme = next;
       applyTheme(next);
       storeSet("meta", JSON.stringify(state.meta));
+      break;
+    }
+    case "open-lesson": {
+      const subject = target.getAttribute("data-subject");
+      const no = parseInt(target.getAttribute("data-chno"),10);
+      state.view = "lesson";
+      state.subject = subject;
+      state.lessonChapter = no;
+      closeDrawer();
+      render();
       break;
     }
     case "toggle-chapter": {
