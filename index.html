@@ -896,6 +896,7 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
      main app file stays untouched in structure. Safe to load even before all
      subjects are ready -- renderChapterLesson() falls back gracefully. -->
 <script src="data/sci1-lessons.js"></script>
+<script src="data/sci2-lessons.js"></script>
 
 <script>
 (function(){
@@ -1161,16 +1162,25 @@ const SUBJECTS = {
           {q:"Explain Mendel's monohybrid cross with a suitable example.", m:3},
           {q:"Explain how sex is determined in humans.", m:2}
         ]},
-      {no:2, title:"Life Processes in Living Organisms",
+      {no:2, title:"Life Processes in Living Organisms Part 1",
         items:[
-          {name:"Nutrition", expr:"autotrophic vs heterotrophic modes of nutrition"},
-          {name:"Transportation", expr:"double circulation in humans; xylem/phloem in plants"}
+          {name:"Cellular respiration", expr:"glycolysis \u2192 Krebs cycle \u2192 electron transport chain \u2192 ATP"},
+          {name:"Cell division", expr:"mitosis (growth, chromosome number unchanged) vs meiosis (gamete formation, chromosome number halved)"}
         ],
         qs:[
-          {q:"Describe the process of nutrition / respiration in humans.", m:3},
-          {q:"Explain transportation of water and food in plants.", m:2}
+          {q:"With the help of a diagram, describe the process of mitosis.", m:3},
+          {q:"Explain the stages of cellular respiration and how ATP is formed.", m:2}
         ]},
-      {no:3, title:"Environmental Management",
+      {no:3, title:"Life Processes in Living Organisms Part 2",
+        items:[
+          {name:"Modes of reproduction", expr:"asexual (budding, fragmentation) vs sexual reproduction"},
+          {name:"Human reproductive systems", expr:"male: testis \u2192 sperm; female: ovary \u2192 ovum, uterus"}
+        ],
+        qs:[
+          {q:"Draw a labelled diagram of the human male or female reproductive system.", m:3},
+          {q:"Describe the process of double fertilisation in flowering plants.", m:2}
+        ]},
+      {no:4, title:"Environmental Management",
         items:[
           {name:"Waste management", expr:"reduce, reuse, recycle; segregation at source"},
           {name:"Sustainable development", expr:"balancing development with resource conservation"}
@@ -1179,7 +1189,16 @@ const SUBJECTS = {
           {q:"Suggest measures for managing solid waste in your locality.", m:3},
           {q:"Explain the concept of sustainable development with an example.", m:2}
         ]},
-      {no:4, title:"Animal Classification",
+      {no:5, title:"Towards Green Energy",
+        items:[
+          {name:"Electricity generation", expr:"thermal, nuclear, hydro, wind and solar plants all ultimately drive a turbine-generator"},
+          {name:"Green energy", expr:"hydro, wind and solar are renewable and eco-friendly, unlike fossil-fuel or nuclear power"}
+        ],
+        qs:[
+          {q:"Explain, with a schematic diagram, the working of a thermal or hydroelectric power plant.", m:3},
+          {q:"What is green energy? Why are fossil-fuel and nuclear power plants not eco-friendly?", m:2}
+        ]},
+      {no:6, title:"Animal Classification",
         items:[
           {name:"Chordates vs non-chordates", expr:"presence/absence of a notochord"},
           {name:"Major phyla", expr:"Porifera, Coelenterata, Arthropoda, Mollusca, Chordata, etc."}
@@ -1188,7 +1207,7 @@ const SUBJECTS = {
           {q:"Classify a given animal and state the phylum it belongs to.", m:2},
           {q:"State distinguishing features of a named phylum or class.", m:2}
         ]},
-      {no:5, title:"Introduction to Microbiology",
+      {no:7, title:"Introduction to Microbiology",
         items:[
           {name:"Groups of microbes", expr:"bacteria, viruses, fungi, protozoa"},
           {name:"Useful microbes", expr:"fermentation, antibiotics, biofertilisers"}
@@ -1197,16 +1216,16 @@ const SUBJECTS = {
           {q:"Explain one useful and one harmful application of microorganisms.", m:2},
           {q:"Describe the process of fermentation with an example.", m:2}
         ]},
-      {no:6, title:"Cell Biology and Biotechnology",
+      {no:8, title:"Cell Biology and Biotechnology",
         items:[
-          {name:"Cell division", expr:"mitosis (growth) vs meiosis (gamete formation)"},
-          {name:"Biotechnology", expr:"applications in agriculture, medicine and industry"}
+          {name:"Stem cells", expr:"undifferentiated cells that can develop into any specialised cell type"},
+          {name:"Biotechnology applications", expr:"GM crops, vaccines, gene therapy, cloning, biofertilisers"}
         ],
         qs:[
-          {q:"Differentiate between mitosis and meiosis.", m:3},
-          {q:"State two applications of biotechnology in daily life.", m:2}
+          {q:"What are stem cells? State their uses in regenerative therapy.", m:2},
+          {q:"Explain any two commercial applications of biotechnology.", m:3}
         ]},
-      {no:7, title:"Social Health",
+      {no:9, title:"Social Health",
         items:[
           {name:"Disease types", expr:"communicable (spread by pathogens) vs lifestyle diseases"},
           {name:"Immunity & de-addiction", expr:"vaccination; effects and management of addiction"}
@@ -1215,7 +1234,7 @@ const SUBJECTS = {
           {q:"Explain the difference between communicable and lifestyle diseases.", m:2},
           {q:"Suggest ways to prevent the spread of a communicable disease.", m:2}
         ]},
-      {no:8, title:"Disaster Management",
+      {no:10, title:"Disaster Management",
         items:[
           {name:"Disaster cycle", expr:"mitigation \u2192 preparedness \u2192 response \u2192 recovery"},
           {name:"Types", expr:"natural (earthquake, flood) and man-made disasters"}
@@ -1223,15 +1242,6 @@ const SUBJECTS = {
         qs:[
           {q:"Explain the stages of the disaster management cycle.", m:3},
           {q:"Suggest precautions to be taken during a named natural disaster.", m:2}
-        ]},
-      {no:9, title:"Agricultural &amp; Processing Technology",
-        items:[
-          {name:"Modern techniques", expr:"drip irrigation, organic farming, high-yield varieties"},
-          {name:"Food processing", expr:"preservation techniques that extend shelf life"}
-        ],
-        qs:[
-          {q:"Explain any one modern technique used to increase agricultural yield.", m:2},
-          {q:"State the importance of food processing and preservation.", m:2}
         ]}
     ]
   }
@@ -1697,8 +1707,9 @@ function statusBtn(id, current, val, glyph, label){
    A subject with no data file yet simply shows a friendly placeholder,
    so this is safe to ship incrementally, subject by subject. */
 const LESSON_SOURCES = {
-  sci1:"SCI1_LESSONS"
-  /* sci2:"SCI2_LESSONS", math1:"MATH1_LESSONS", math2:"MATH2_LESSONS" -- added as those files ship */
+  sci1:"SCI1_LESSONS",
+  sci2:"SCI2_LESSONS"
+  /* math1:"MATH1_LESSONS", math2:"MATH2_LESSONS" -- added as those files ship */
 };
 
 function getLessonData(subjectKey, no){
