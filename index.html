@@ -502,6 +502,26 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 [data-theme="slate"] .lesson-formula-row.mistake{color:#F3A79A;}
 .lesson-formula-row.mistake b{color:inherit;}
 
+.lesson-example{
+  background:var(--paper);border:1px solid var(--rule);border-radius:12px;
+  padding:14px 16px 16px;margin-bottom:14px;
+}
+.lesson-example:last-child{margin-bottom:0;}
+.lesson-example-title{
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--focus);margin-bottom:8px;
+}
+.lesson-example-problem{
+  font-size:.86rem;line-height:1.55;color:var(--ink);font-weight:500;margin-bottom:10px;
+  padding-bottom:10px;border-bottom:1px dashed var(--rule);
+}
+.lesson-example-steps{margin:0 0 10px 1.1em;padding:0;display:flex;flex-direction:column;gap:6px;}
+.lesson-example-steps li{font-size:.83rem;line-height:1.55;color:var(--ink-soft);padding-left:4px;}
+.lesson-example-answer{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.85rem;color:var(--accent);
+  background:var(--accent-soft);border-radius:8px;padding:8px 12px;
+}
+
 .lesson-table-wrap{overflow-x:auto;margin-bottom:4px;}
 .lesson-table{width:100%;border-collapse:collapse;font-size:.83rem;}
 .lesson-table caption{text-align:left;font-weight:600;font-size:.88rem;margin-bottom:10px;color:var(--ink);}
@@ -897,6 +917,7 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
      subjects are ready -- renderChapterLesson() falls back gracefully. -->
 <script src="data/sci1-lessons.js"></script>
 <script src="data/sci2-lessons.js"></script>
+<script src="data/math1-lessons.js"></script>
 
 <script>
 (function(){
@@ -1708,8 +1729,9 @@ function statusBtn(id, current, val, glyph, label){
    so this is safe to ship incrementally, subject by subject. */
 const LESSON_SOURCES = {
   sci1:"SCI1_LESSONS",
-  sci2:"SCI2_LESSONS"
-  /* math1:"MATH1_LESSONS", math2:"MATH2_LESSONS" -- added as those files ship */
+  sci2:"SCI2_LESSONS",
+  math1:"MATH1_LESSONS"
+  /* math2:"MATH2_LESSONS" -- added as that file ships */
 };
 
 function getLessonData(subjectKey, no){
@@ -1776,6 +1798,16 @@ function renderChapterLesson(subjectKey, no){
       '<div class="lesson-diagram-cap"><b>'+esc(d.caption)+'</b>'+(d.note?('<span>'+esc(d.note)+'</span>'):'')+'</div>'+
     '</div>';
   }).join("");
+  const examplesHtml = (lesson.solvedExamples||[]).map(function(ex, i){
+    const stepsHtml = (ex.steps||[]).map(function(st){ return '<li>'+esc(st)+'</li>'; }).join("");
+    return '<div class="lesson-example">'+
+      '<div class="lesson-example-title">Example '+(i+1)+(ex.title?(' \u2014 '+esc(ex.title)):'')+'</div>'+
+      '<div class="lesson-example-problem">'+esc(ex.problem)+'</div>'+
+      (stepsHtml?('<ol class="lesson-example-steps">'+stepsHtml+'</ol>'):'')+
+      (ex.answer?('<div class="lesson-example-answer">'+esc(ex.answer)+'</div>'):'')+
+    '</div>';
+  }).join("");
+  const solvingTipsHtml = (lesson.solvingTips||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
   const pointsHtml = (lesson.importantPoints||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
   const tipsHtml = (lesson.boardTips||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
   const summaryHtml = (lesson.revisionSummary||[]).map(function(p){ return '<li>'+esc(p)+'</li>'; }).join("");
@@ -1803,8 +1835,10 @@ function renderChapterLesson(subjectKey, no){
     section("Important Concepts", conceptsHtml)+
     section("Important Definitions", defsHtml)+
     section("Formulas", formulasHtml)+
+    section("Solved Examples", examplesHtml, "lesson-examples")+
     section("Important Tables", tablesHtml)+
     section("Important Diagrams", diagramsHtml)+
+    section("Tips to Solve", solvingTipsHtml?('<ul class="lesson-list">'+solvingTipsHtml+'</ul>'):"", "lesson-tips")+
     section("Important Points to Remember", pointsHtml?('<ul class="lesson-list">'+pointsHtml+'</ul>'):"")+
     section("Board Exam Tips", tipsHtml?('<ul class="lesson-list">'+tipsHtml+'</ul>'):"", "lesson-tips")+
     section("Quick Revision Summary", summaryHtml?('<ul class="lesson-list">'+summaryHtml+'</ul>'):"", "lesson-summary")+
