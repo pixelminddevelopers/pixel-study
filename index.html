@@ -542,6 +542,18 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 .lesson-diagram-cap b{color:var(--ink);font-weight:600;display:block;margin-bottom:3px;}
 .lesson-diagram-cap span{color:var(--ink-faint);font-size:.78rem;}
 
+.lesson-inline-image{
+  margin:10px 0 12px;max-width:340px;
+}
+.lesson-inline-image img{
+  width:100%;height:auto;border-radius:9px;border:1px solid var(--rule);
+  background:#fff;display:block;
+}
+.lesson-inline-image-cap{
+  margin-top:6px;font-size:.76rem;line-height:1.45;color:var(--ink-faint);font-style:italic;
+}
+.lesson-example .lesson-inline-image{margin-top:8px;}
+
 .lesson-tips{background:var(--gold-soft);}
 .lesson-tips .lesson-h3{border-bottom-color:rgba(184,121,26,.25);color:var(--gold);}
 .lesson-tips .lesson-list li::before{background:var(--gold);}
@@ -562,6 +574,7 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
   .chapter-open-lesson{margin-left:40px;}
   .lesson-summary .lesson-list{grid-template-columns:1fr;}
   .lesson-formula-expr{white-space:normal;}
+  .lesson-inline-image{max-width:100%;}
 }
 
 /* ---------- Formula vault ---------- */
@@ -918,6 +931,7 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Serif',Georgia,serif;}
 <script src="data/sci1-lessons.js"></script>
 <script src="data/sci2-lessons.js"></script>
 <script src="data/math1-lessons.js"></script>
+<script src="data/math2-lessons.js"></script>
 
 <script>
 (function(){
@@ -1730,8 +1744,8 @@ function statusBtn(id, current, val, glyph, label){
 const LESSON_SOURCES = {
   sci1:"SCI1_LESSONS",
   sci2:"SCI2_LESSONS",
-  math1:"MATH1_LESSONS"
-  /* math2:"MATH2_LESSONS" -- added as that file ships */
+  math1:"MATH1_LESSONS",
+  math2:"MATH2_LESSONS"
 };
 
 function getLessonData(subjectKey, no){
@@ -1766,8 +1780,17 @@ function renderChapterLesson(subjectKey, no){
   }
 
   const objectivesHtml = (lesson.objectives||[]).map(function(o){ return '<li>'+esc(o)+'</li>'; }).join("");
+  function inlineImageHtml(img){
+    if (!img) return "";
+    return '<div class="lesson-inline-image">'+
+      '<img src="assets/diagrams/'+esc(img.src)+'" alt="'+esc(img.caption||"")+'" loading="lazy">'+
+      (img.caption?('<div class="lesson-inline-image-cap">'+esc(img.caption)+'</div>'):'')+
+    '</div>';
+  }
   const conceptsHtml = (lesson.concepts||[]).map(function(c){
-    return '<div class="lesson-concept"><h4>'+esc(c.heading)+'</h4><p>'+esc(c.text)+'</p></div>';
+    return '<div class="lesson-concept"><h4>'+esc(c.heading)+'</h4>'+
+      inlineImageHtml(c.image)+
+      '<p>'+esc(c.text)+'</p></div>';
   }).join("");
   const defsHtml = (lesson.definitions||[]).map(function(d){
     return '<div class="lesson-def"><b>'+esc(d.term)+'.</b> <span>'+esc(d.def)+'</span></div>';
@@ -1803,6 +1826,7 @@ function renderChapterLesson(subjectKey, no){
     return '<div class="lesson-example">'+
       '<div class="lesson-example-title">Example '+(i+1)+(ex.title?(' \u2014 '+esc(ex.title)):'')+'</div>'+
       '<div class="lesson-example-problem">'+esc(ex.problem)+'</div>'+
+      inlineImageHtml(ex.image)+
       (stepsHtml?('<ol class="lesson-example-steps">'+stepsHtml+'</ol>'):'')+
       (ex.answer?('<div class="lesson-example-answer">'+esc(ex.answer)+'</div>'):'')+
     '</div>';
